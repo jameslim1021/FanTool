@@ -1,0 +1,17 @@
+<div class="score-setting">
+    <form ng-submit="submitScore(view.settings.passTD, view.settings.int, view.settings.passYD, view.settings.rushTD, view.settings.rushYD, view.settings.recTD, view.settings.rec, view.settings.recYD)">
+        <h2 ng-click="clicky()">Please enter your preferred scoring settings:</h2>
+        <h3>Passing</h3>
+        <label><strong>Passing Touchdowns: </strong><input type=text ng-model="view.settings.passTD" maxlength="2"> Points</label>
+        <label><strong>Interceptions: </strong><input type=text ng-model="view.settings.int" maxlength="2"> Points</label>
+        <label><strong>Passing Yards: </strong><input type=text ng-model="view.settings.passYD" maxlength="2"> Yards = 1 Point</label>
+        <h3>Rushing</h3>
+        <label><strong>Rushing Touchdowns: </strong><input type=text ng-model="view.settings.rushTD" maxlength="2"> Points</label>
+        <label><strong>Rushing Yards: </strong><input type=text ng-model="view.settings.rushYD" maxlength="2"> Yards = 1 Point</label>
+        <h3>Receiving</h3>
+        <label><strong>Receiving Touchdowns: </strong><input type=text ng-model="view.settings.recTD" maxlength="2"> Points</label>
+        <label><strong>Receptions: </strong><input type=text ng-model="view.settings.rec" maxlength="2"> Points</label>
+        <label><strong>Receiving Yards: </strong><input type=text ng-model="view.settings.recYD" maxlength="2"> Yards = 1 Point</label>
+        <input type="submit" value="Submit">
+    </form>
+</div>

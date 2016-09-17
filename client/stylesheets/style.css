@@ -1,0 +1,68 @@
+body {
+  font: 16px Helvetica, Arial, sans-serif;
+  background-color: hsla(1, 0%, 65%, 1);
+  padding-top: 40px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.header-wrapper {
+    width: 100%;
+    margin: 0;
+}
+
+.wrapper {
+    width: 90%;
+    margin: 0 auto;
+    padding: 2em;
+    background-color: hsla(0, 100%, 100%, 0.5);
+}
+
+.home-content {
+    padding: 10em;
+    text-align: center;
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    height: 5em;
+    background-image: url("../images/stadium.jpg");
+    background-size: cover;
+    background-position: bottom;
+    top: 0;
+}
+
+header nav {
+    margin-top: 1.2em;
+    text-align: center;
+}
+
+header nav a {
+    color: hsla(280, 100%, 30%, 1);
+    text-decoration: none;
+    font-size: 2em;
+    letter-spacing: .2em;
+    font-weight: bolder;
+}
+
+input[type=text] {
+    border: 0.1em solid hsla(1, 0%, 65%, 1);
+    width: 1.6em;
+    height: 1.2em;
+    maxlength: 2;
+}
+
+.score-setting {
+    padding: 3.2em;
+}
+
+.score-setting label {
+    margin-top: 0.5em;
+}
+
+.score-setting label {
+    display: block;
+}

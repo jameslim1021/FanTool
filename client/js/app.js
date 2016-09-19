@@ -1,4 +1,4 @@
-const app = angular.module("myApp", ["ui.router", "googlechart"]);
+const app = angular.module("myApp", ["ui.router", "chart.js"]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');

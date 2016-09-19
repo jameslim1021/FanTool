@@ -1,5 +1,6 @@
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Comment
 import urllib2
+
 
 team_map = {"Redskins":"was", "Eagles":"phi", "Giants":"nyg", "Cowboys":"dal",
     "Vikings":"min", "Packers":"gnb", "Lions":"det", "Bears":"chi",
@@ -32,7 +33,7 @@ def format_date(date):
 
 def make_soup(url):
     page = urllib2.urlopen(url)
-    soupdata = BeautifulSoup(page, 'html.parser')
+    soupdata = BeautifulSoup(page, 'lxml')
     return soupdata
 
 def get_game_log(team_url):
@@ -95,8 +96,10 @@ def get_player_log(url_obj):
     # for week in url_obj:
     # soup = make_soup("http://www.pro-football-reference.com/boxscores/" + url_obj[1]["date"] + "0" + url_obj[1]["team"] + ".htm")
     soup = make_soup("http://www.pro-football-reference.com/boxscores/201509130was.htm")
-    tables = soup.find_all(attrs={"id":"team_stats"})
-    print tables
+    player_div = soup.find_all('table', id_='team_stats')
+    print player_div
+    # offense_table = player_div.find('table', {"id":"player_offense"})
+    # print player_div
     # body = tableStats.find('tbody')
     # for record in body.findAll('tr'):
     #     for data in record.findAll('td'):

@@ -13,34 +13,28 @@ app.controller("TeamsController", function($scope, teamService) {
     $scope.view = {};
     $scope.view.teams = teamService.teams;
     $scope.clicky = function () {
-        console.log(rowData);
+        console.log($scope.data);
     };
 
-    $scope.teamsChart = {};
-    $scope.teamsChart.type = "BarChart";
+    $scope.teams = Object.keys($scope.view.teams);
+    $scope.data = [];
 
-    let teams = Object.keys($scope.view.teams);
-
-    var rowData = [];
-    for (let i = 0; i < teams.length; i++) {
-        let temp = {c:[
-            {v: teams[i]},
-            {v: $scope.view.teams[teams[i]][1]["passYardsFor"]}
-        ]};
-        rowData.push(temp);
+    // Chart.js data must be nested array i.e. [[1,2,3,4,5]]
+    var chartData = [];
+    for (let i = 0; i < $scope.teams.length; i++) {
+        chartData.push($scope.view.teams[$scope.teams[i]][1].passYardsFor);
     }
 
-    rowData.sort((a,b)=>{return b.c[1].v-a.c[1].v;});
-    $scope.teamsChart.data = {"cols": [
-        {id: "t", label: "Teams", type: "string"},
-        {id: "p", label: "Points", type: "number"},
-        {role: "style", type: "string"}
-    ], "rows": rowData};
+    chartData.sort();
+    $scope.data.push(chartData);
 
-    $scope.example = "helloworld";
-
-    $scope.teamsChart.options = {
-        'title': $scope.example,
-         "hAxis":{label:"Teams","showTextEvery":1},
-    };
+    $scope.datasetOverride = [
+          {
+            label: "Pass Yards For",
+            borderWidth: 1,
+            type: 'line',
+            hoverBackgroundColor: "rgba(255,99,132,0.4)",
+            hoverBorderColor: "rgba(255,99,132,1)"
+          }
+    ];
 });

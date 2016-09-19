@@ -1,4 +1,4 @@
-const app = angular.module("myApp", ["ui.router"]);
+const app = angular.module("myApp", ["ui.router", "googlechart"]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -24,6 +24,18 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                 'mainContent': {
                     templateUrl: '../templates/score-setting.html',
                     controller: 'ScoreController'
+                }
+            }
+        })
+        .state('teams', {
+            url:'/teams',
+            views: {
+                'header': {
+                    templateUrl: '../templates/header.html'
+                },
+                'mainContent': {
+                    templateUrl: '../templates/teams.html',
+                    controller: 'TeamsController'
                 }
             }
         })

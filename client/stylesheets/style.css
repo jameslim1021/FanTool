@@ -17,7 +17,7 @@ body {
     width: 90%;
     margin: 0 auto;
     padding: 2em;
-    background-color: hsla(0, 100%, 100%, 0.5);
+    background-color: #FFFFFF;
 }
 
 .home-content {
@@ -55,14 +55,18 @@ input[type=text] {
     maxlength: 2;
 }
 
-.score-setting {
+.score-wrapper, .teams-wrapper {
     padding: 3.2em;
 }
 
-.score-setting label {
+.score-wrapper label {
     margin-top: 0.5em;
 }
 
-.score-setting label {
+.score-wrapper label {
     display: block;
+}
+
+.teams-chart {
+    border: 2px solid #000000;
 }

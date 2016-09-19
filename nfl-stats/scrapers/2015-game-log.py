@@ -49,14 +49,14 @@ def get_game_log(team_url):
     return game_log
 
 game_log_2015 = {
-    "was":get_game_log("was"), "phi":get_game_log("phi"), "nyg":get_game_log("nyg"), "dal":get_game_log("dal"),
-    "min":get_game_log("min"), "gnb":get_game_log("gnb"), "det":get_game_log("det"), "chi":get_game_log("chi"),
-    "car":get_game_log("car"), "atl":get_game_log("atl"), "nor":get_game_log("nor"), "tam":get_game_log("tam"),
-    "crd":get_game_log("crd"), "sea":get_game_log("sea"), "ram":get_game_log("ram"), "sfo":get_game_log("sfo"),
-    "nwe":get_game_log("nwe"), "nyj":get_game_log("nyj"), "buf":get_game_log("buf"), "mia":get_game_log("mia"),
-    "cin":get_game_log("cin"), "pit":get_game_log("pit"), "rav":get_game_log("rav"), "cle":get_game_log("cle"),
-    "htx":get_game_log("htx"), "clt":get_game_log("clt"), "jax":get_game_log("jax"), "oti":get_game_log("oti"),
-    "den":get_game_log("den"), "kan":get_game_log("kan"), "rai":get_game_log("rai"), "sdg":get_game_log("sdg")
+    "NFCeast": {"Redskins":get_game_log("was"), "Eagles":get_game_log("phi"), "Giants":get_game_log("nyg"), "Cowboys":get_game_log("dal")},
+    "NFCnorth": {"Vikings":get_game_log("min"), "Packers":get_game_log("gnb"), "Lions":get_game_log("det"), "Bears":get_game_log("chi")},
+    "NFCsouth": {"Panthers":get_game_log("car"), "Falcons":get_game_log("atl"), "Saints":get_game_log("nor"), "Buccaneers":get_game_log("tam")},
+    "NFCwest": {"Cardinals":get_game_log("crd"), "Seahawks":get_game_log("sea"), "Rams":get_game_log("ram"), "49ers":get_game_log("sfo")},
+    "AFCeast": {"Patriots":get_game_log("nwe"), "Jets":get_game_log("nyj"), "Bills":get_game_log("buf"), "Dolphins":get_game_log("mia")},
+    "AFCnorth": {"Bengals":get_game_log("cin"), "Steelers":get_game_log("pit"), "Ravens":get_game_log("rav"), "Browns":get_game_log("cle")},
+    "AFCsouth": {"Texans":get_game_log("htx"), "Colts":get_game_log("clt"), "Jaguars":get_game_log("jax"), "Titans":get_game_log("oti")},
+    "AFCwest": {"Broncos":get_game_log("den"), "Chiefs":get_game_log("kan"), "Raiders":get_game_log("rai"), "Chargers":get_game_log("sdg")}
 }
 
 # hello

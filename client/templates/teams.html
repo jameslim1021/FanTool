@@ -1,15 +1,27 @@
 <div class="teams-wrapper">
-    <h3 ng-click="clicky()">AFC</h3>
-    <h4>North</h4>
-    <h4>South</h4>
-    <h4>East</h4>
-    <h4>West</h4>
-    <h3>NFC</h3>
-    <h4>North</h4>
-    <h4>South</h4>
-    <h4>East</h4>
-    <h4>West</h4>
+    <table>
+        <thead>
+            <tr>
+                <td ng-click="clicky()">AFC</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>AFC West</td>
+                <td>Record</td>
+                <td>Points Gained</td>
+                <td>Pass Yds Gained</td>
+                <td>Rush Yds Gained</td>
+                <td>Rec Yds Gained</td>
+                <td>Pass Yds Allowed</td>
+                <td>Rush Yds Allowed</td>
+                <td>Rec Yds Allowed</td>
+                <td>Points Allowed</td>
+            </tr>
+            <tr ft-team-info ng-repeat="team in view.afcWest"></tr>
+        </tbody>
+    </table>
     <canvas id="line" class="chart chart-line" chart-data="data"
-    chart-labels="teams" chart-dataset-override="datasetOverride">
+    chart-labels="view.teams" chart-dataset-override="datasetOverride">
     </canvas>
 </div>

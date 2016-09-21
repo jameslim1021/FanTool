@@ -8,43 +8,43 @@ def make_soup(url):
 
 def get_game_log(team_url):
     soup = make_soup("http://www.pro-football-reference.com/teams/" + team_url + "/2015.htm")
-    tableStats = soup.find("table", {"id":"games"})
+    table_stats = soup.find("table", {"id":"games"})
 
-    dataArray = []
+    data_array = []
     week = 0
-    weekData = {}
+    week_data = {}
 
-    for record in tableStats.findAll('tr'):
+    for record in table_stats.findAll('tr'):
         for data in record.findAll('td'):
-            dataArray.append(data.text)
-        weekData[week] = dataArray
-        dataArray = []
+            data_array.append(data.text)
+        week_data[week] = data_array
+        data_array = []
         week = week + 1
 
     game_log = {}
 
-    for game in weekData:
+    for game in week_data:
         if game > 0:
-            if weekData[game][6] == "@":
+            if week_data[game][6] == "@":
                 home = False
             else:
                 home = True
             game_log[game] = {
-                "date": weekData[game][1],
-                "result": weekData[game][3],
-                "record": weekData[game][5],
+                "date": week_data[game][1],
+                "result": week_data[game][3],
+                "record": week_data[game][5],
                 "home": home,
-                "opponent": weekData[game][7],
-                "pointsFor": weekData[game][8],
-                "pointsAgainst": weekData[game][9],
-                "totalYardsFor": weekData[game][11],
-                "passYardsFor": weekData[game][12],
-                "rushYardsFor": weekData[game][13],
-                "turnovers Lost": weekData[game][14],
-                "totalYardsAgainst": weekData[game][16],
-                "passYardsAgainst": weekData[game][17],
-                "rushYardsAgainst": weekData[game][18],
-                "turnovers Forced": weekData[game][19]
+                "opponent": week_data[game][7],
+                "pointsFor": week_data[game][8],
+                "pointsAgainst": week_data[game][9],
+                "totalYardsFor": week_data[game][11],
+                "passYardsFor": week_data[game][12],
+                "rushYardsFor": week_data[game][13],
+                "turnovers Lost": week_data[game][14],
+                "totalYardsAgainst": week_data[game][16],
+                "passYardsAgainst": week_data[game][17],
+                "rushYardsAgainst": week_data[game][18],
+                "turnovers Forced": week_data[game][19]
             }
     return game_log
 

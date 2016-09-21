@@ -1,6 +1,8 @@
-from bs4 import BeautifulSoup, Comment
+from bs4 import BeautifulSoup
 import urllib2
+import re
 
+comm = re.compile("<!--|-->")
 
 team_map = {"Redskins":"was", "Eagles":"phi", "Giants":"nyg", "Cowboys":"dal",
     "Vikings":"min", "Packers":"gnb", "Lions":"det", "Bears":"chi",
@@ -27,43 +29,45 @@ def format_date(date):
         return "Bye Week"
     else:
         date_arr = date.split(" ")
+        if len(date_arr[1]) == 1:
+            date_arr[1] = "0" + date_arr[1]
         new_date = date_map[date_arr[0]]["year"] + date_map[date_arr[0]]["month"] + date_arr[1]
         return new_date
 
 
 def make_soup(url):
     page = urllib2.urlopen(url)
-    soupdata = BeautifulSoup(page, 'lxml')
+    soupdata = BeautifulSoup(comm.sub("", page.read()), 'lxml')
     return soupdata
 
 def get_game_log(team_url):
     soup = make_soup("http://www.pro-football-reference.com/teams/" + team_url + "/2015.htm")
-    tableStats = soup.find("table", {"id":"games"})
+    table_stats = soup.find("table", {"id":"games"})
 
-    dataArray = []
+    data_array = []
     week = 0
-    weekData = {}
+    week_data = {}
 
-    for record in tableStats.findAll('tr'):
+    for record in table_stats.findAll('tr'):
         for data in record.findAll('td'):
-            dataArray.append(data.text)
+            data_array.append(data.text)
         if week < 18:
-            weekData[week] = dataArray
-            dataArray = []
+            week_data[week] = data_array
+            data_array = []
             week = week + 1
 
     game_log = {}
 
-    for game in weekData:
+    for game in week_data:
         if game > 0:
-            if weekData[game][6] == "@":
+            if week_data[game][6] == "@":
                 home = False
             else:
                 home = True
             game_log[game] = {
-                "date": weekData[game][1],
+                "date": week_data[game][1],
                 "home": home,
-                "opponent": team_abbrev(weekData[game][7])
+                "opponent": team_abbrev(week_data[game][7])
             }
     return game_log
 
@@ -77,32 +81,64 @@ def get_game_log(team_url):
 #     "htx":get_game_log("htx"), "clt":get_game_log("clt"), "jax":get_game_log("jax"), "oti":get_game_log("oti"),
 #     "den":get_game_log("den"), "kan":get_game_log("kan"), "rai":get_game_log("rai"), "sdg":get_game_log("sdg")
 # }
+game_log_2015 = {"was":get_game_log("was")}
 
-testt = {"was":get_game_log("was")}
 
 url_info = {}
 
-for team in testt:
-    for game in testt[team]:
-        url_info[game] = {}
-        if len(testt[team][game]) > 0:
-            url_info[game]["date"] = format_date(testt[team][game]["date"])
-            if testt[team][game]["home"] == True:
-                url_info[game]["team"] = team
+# format for url
+for team in game_log_2015:
+    url_info[team] = {}
+    for game in game_log_2015[team]:
+        url_info[team][game] = {}
+        if len(game_log_2015[team][game]) > 0:
+            url_info[team][game]["date"] = format_date(game_log_2015[team][game]["date"])
+            if game_log_2015[team][game]["home"] == True:
+                url_info[team][game]["city"] = team
             else:
-                url_info[game]["team"] = testt[team][game]["opponent"]
+                url_info[team][game]["city"] = game_log_2015[team][game]["opponent"]
 
 def get_player_log(url_obj):
-    # for week in url_obj:
-    # soup = make_soup("http://www.pro-football-reference.com/boxscores/" + url_obj[1]["date"] + "0" + url_obj[1]["team"] + ".htm")
-    soup = make_soup("http://www.pro-football-reference.com/boxscores/201509130was.htm")
-    player_div = soup.find_all('table', id_='team_stats')
-    print player_div
-    # offense_table = player_div.find('table', {"id":"player_offense"})
-    # print player_div
-    # body = tableStats.find('tbody')
-    # for record in body.findAll('tr'):
-    #     for data in record.findAll('td'):
-    #         print data.text
+    player_log = {}
+
+    for team in url_obj:
+        player_log[team] = {}
+        for week in url_obj[team]:
+            if url_obj[team][week]["date"] == "Bye Week":
+                player_log[team][week] = "Bye Week"
+            else:
+                player_log[team][week] = {}
+                soup = make_soup("http://www.pro-football-reference.com/boxscores/" + url_obj[team][week]["date"] + "0" + url_obj[team][week]["city"] + ".htm")
+                table_stats = soup.find('table', id='player_offense')
+
+                table = table_stats.encode('utf-8')
+                soupdata = BeautifulSoup(table, 'lxml')
+
+                body = soupdata.find('tbody')
+
+                # names are in <th>, need to loop and grab them
+                names = []
+                for record in body.findAll('tr'):
+                    for data in record.findAll('th'):
+                        if len(data.text.split(" ")) > 1:
+                            names.append(data.text)
+
+                player_data = []
+                player_data_array = []
+                # loop and map names to stats
+                for record in body.findAll('tr'):
+                    for data in record.findAll('td'):
+                        player_data.append(data.text)
+                    if len(player_data) > 0:
+                        player_data_array.append(player_data)
+                        player_data = []
+                    # print player_log
+
+                for i in range(0,len(player_data_array)-1):
+                    player_log[team][week][names[i]] = player_data_array[i]
+
+                player_data_array = []
+
+    return player_log
 
 print get_player_log(url_info)

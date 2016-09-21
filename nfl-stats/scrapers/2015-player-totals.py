@@ -8,54 +8,54 @@ def make_soup(url):
 
 def get_player_totals():
     soup = make_soup("http://www.pro-football-reference.com/years/2015/fantasy.htm")
-    tableStats = soup.find("table", {"id":"fantasy"})
+    table_stats = soup.find("table", {"id":"fantasy"})
 
-    dataArray = []
+    data_array = []
     rank = 1
-    playerData = {}
+    player_data = {}
 
-    body = tableStats.find('tbody')
+    body = table_stats.find('tbody')
     for record in body.findAll('tr'):
         for data in record.findAll('td'):
-            dataArray.append(data.text)
-        if len(dataArray) > 0:
-            playerData[rank] = dataArray
-            dataArray = []
+            data_array.append(data.text)
+        if len(data_array) > 0:
+            player_data[rank] = data_array
+            data_array = []
             rank = rank + 1
 
-    playerStats = {}
+    player_stats = {}
 
-    for player in playerData:
-        if len(playerData[player]) > 0:
-            playerStats[player] = {
-                    "name": playerData[player][0],
-                    "team": playerData[player][1],
-                    "position": playerData[player][2],
-                    "age": playerData[player][3],
-                    "gamesPlayed": playerData[player][4],
-                    "gamesStarted": playerData[player][5],
+    for player in player_data:
+        if len(player_data[player]) > 0:
+            player_stats[player] = {
+                    "name": player_data[player][0],
+                    "team": player_data[player][1],
+                    "position": player_data[player][2],
+                    "age": player_data[player][3],
+                    "gamesPlayed": player_data[player][4],
+                    "gamesStarted": player_data[player][5],
                     "passing" : {
-                        "completions": playerData[player][6],
-                        "attempts": playerData[player][7],
-                        "yards": playerData[player][8],
-                        "touchdowns": playerData[player][9],
-                        "interceptions": playerData[player][10]
+                        "completions": player_data[player][6],
+                        "attempts": player_data[player][7],
+                        "yards": player_data[player][8],
+                        "touchdowns": player_data[player][9],
+                        "interceptions": player_data[player][10]
                     },
                     "rushing" : {
-                        "carries": playerData[player][11],
-                        "yards": playerData[player][12],
-                        "ydsPerCarry": playerData[player][13],
-                        "touchdowns": playerData[player][14]
+                        "carries": player_data[player][11],
+                        "yards": player_data[player][12],
+                        "ydsPerCarry": player_data[player][13],
+                        "touchdowns": player_data[player][14]
                     },
                     "receiving" : {
-                        "targets": playerData[player][15],
-                        "receptions": playerData[player][16],
-                        "yards": playerData[player][17],
-                        "ydsPerReception": playerData[player][18],
-                        "touchdowns": playerData[player][19]
+                        "targets": player_data[player][15],
+                        "receptions": player_data[player][16],
+                        "yards": player_data[player][17],
+                        "ydsPerReception": player_data[player][18],
+                        "touchdowns": player_data[player][19]
                     },
             }
 
-    return playerStats
+    return player_stats
 
 print get_player_totals()

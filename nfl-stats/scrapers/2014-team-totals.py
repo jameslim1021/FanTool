@@ -7,7 +7,7 @@ def make_soup(url):
     return soupdata
 
 def get_team_totals():
-    soup = make_soup("http://www.pro-football-reference.com/years/2015/")
+    soup = make_soup("http://www.pro-football-reference.com/years/2014/")
 
     # get the comments
     comments = soup.findAll(text=lambda text:isinstance(text, Comment))

@@ -14,9 +14,9 @@ team_map = {"Redskins":"was", "Eagles":"phi", "Giants":"nyg", "Cowboys":"dal",
     "Texans":"htx", "Colts":"clt", "Jaguars":"jax", "Titans":"oti",
     "Broncos":"den", "Chiefs":"kan", "Raiders":"rai", "Chargers":"sdg"}
 
-date_map = {"September": {"month": "09", "year": "2015"}, "October": {"month": "10", "year": "2015"},
-    "November": {"month": "11", "year": "2015"}, "December": {"month": "12", "year": "2015"},
-    "January": {"month": "01", "year": "2016"}}
+date_map = {"September": {"month": "09", "year": "2014"}, "October": {"month": "10", "year": "2014"},
+    "November": {"month": "11", "year": "2014"}, "December": {"month": "12", "year": "2014"},
+    "January": {"month": "01", "year": "2015"}}
 
 def team_abbrev(team):
     team_arr = team.split(" ")
@@ -42,7 +42,7 @@ def make_soup(url):
     return soupdata
 
 def get_game_log(team_url):
-    soup = make_soup("http://www.pro-football-reference.com/teams/" + team_url + "/2015.htm")
+    soup = make_soup("http://www.pro-football-reference.com/teams/" + team_url + "/2014.htm")
     table_stats = soup.find("table", {"id":"games"})
 
     data_array = []

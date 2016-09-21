@@ -16,6 +16,7 @@ app.use(cookieParser());
 app.use('/css',express.static(path.join(__dirname, '../client/css')));
 app.use('/js',express.static(path.join(__dirname, '../client/js')));
 app.use('/templates',express.static(path.join(__dirname, '../client/templates')));
+app.use('/images',express.static(path.join(__dirname, '../client/images')));
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../client', 'index.html'));

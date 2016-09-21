@@ -7,6 +7,9 @@ exports.seed = function(knex, Promise) {
             knex('teams').del();
         })
         .then(function () {
+            knex('teams_totals').del();
+        })
+        .then(function () {
             knex('games').del();
         })
         .then(function () {
@@ -34,6 +37,40 @@ exports.seed = function(knex, Promise) {
         return Promise.all([
             knex('teams').insert({city:'St. Louis', name:'Rams'}),
             knex('teams').insert({city:'Arizona', name:'Cardinals'}),
+        ]);
+    })
+    .then(function () {
+        return Promise.all([
+            knex('teams_totals').insert({
+                team_id: 1,
+                season: 2015,
+                points: 280,
+                total_yards: 4761,
+                turnovers: 22,
+                completions: 273,
+                attempts: 473,
+                pass_yards: 2805,
+                pass_tds: 11,
+                interceptions: 11,
+                carries: 429,
+                rush_yards: 1956,
+                rush_tds: 16
+            }),
+            knex('teams_totals').insert({
+                team_id: 2,
+                season: 2015,
+                points: 489,
+                total_yards: 6533,
+                turnovers: 24,
+                completions: 353,
+                attempts: 562,
+                pass_yards: 4616,
+                pass_tds: 35,
+                interceptions: 13,
+                carries: 452,
+                rush_yards: 1917,
+                rush_tds: 16
+            }),
         ]);
     })
     .then(function () {
@@ -74,12 +111,12 @@ exports.seed = function(knex, Promise) {
     })
     .then(function () {
         return Promise.all([
-            knex('players_teams').insert({player_id: 1, team_id: 1, year: 2015}),
-            knex('players_teams').insert({player_id: 2, team_id: 1, year: 2015}),
-            knex('players_teams').insert({player_id: 3, team_id: 1, year: 2015}),
-            knex('players_teams').insert({player_id: 4, team_id: 2, year: 2015}),
-            knex('players_teams').insert({player_id: 5, team_id: 2, year: 2015}),
-            knex('players_teams').insert({player_id: 6, team_id: 2, year: 2015})
+            knex('players_teams').insert({player_id: 1, team_id: 1, season: 2015}),
+            knex('players_teams').insert({player_id: 2, team_id: 1, season: 2015}),
+            knex('players_teams').insert({player_id: 3, team_id: 1, season: 2015}),
+            knex('players_teams').insert({player_id: 4, team_id: 2, season: 2015}),
+            knex('players_teams').insert({player_id: 5, team_id: 2, season: 2015}),
+            knex('players_teams').insert({player_id: 6, team_id: 2, season: 2015})
         ]);
     })
     .then(function () {

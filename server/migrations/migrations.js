@@ -8,10 +8,29 @@ exports.up = function(knex, Promise) {
           table.string('position');
           table.biginteger('age'); //added
       })]).then(function(){
+
         return knex.schema.createTable('teams',function (table) {
           table.increments('id').primary();
           table.string('city');
           table.string('name');
+        });
+      }).then(function() {
+
+        return knex.schema.createTable('teams_totals',function(table){
+            table.increments('id').primary();
+            table.biginteger('team_id',20).references('id').inTable('teams').onDelete('cascade');
+            table.biginteger('season');
+            table.biginteger('points');
+            table.biginteger('total_yards');
+            table.biginteger('turnovers');
+            table.biginteger('completions');
+            table.biginteger('attempts');
+            table.biginteger('pass_yards');
+            table.biginteger('pass_tds');
+            table.biginteger('interceptions');
+            table.biginteger('carries');
+            table.biginteger('rush_yards');
+            table.biginteger('rush_tds');
         });
       }).then(function() {
 
@@ -38,7 +57,7 @@ exports.up = function(knex, Promise) {
             table.increments('id').primary();
             table.biginteger('player_id',20).references('id').inTable('players').onDelete('cascade');
             table.biginteger('team_id',20).references('id').inTable('teams').onDelete('cascade');
-            table.biginteger('year');
+            table.biginteger('season');
         });
       }).then(function () {
 
@@ -87,13 +106,14 @@ exports.up = function(knex, Promise) {
             table.biginteger('fumbles');
             table.biginteger('fumbles_lost');
         });
-      })
+    });
 };
 
 exports.down = function(knex, Promise) {
   return Promise.all([
       knex.schema.dropTable('players'),
       knex.schema.dropTable('teams'),
+      knex.schema.dropTable('teams_totals'),
       knex.schema.dropTable('games'),
       knex.schema.dropTable('players_teams'),
       knex.schema.dropTable('players_totals'),

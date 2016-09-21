@@ -32,28 +32,22 @@ def get_player_totals():
                     "team": player_data[player][1],
                     "position": player_data[player][2],
                     "age": player_data[player][3],
-                    "gamesPlayed": player_data[player][4],
-                    "gamesStarted": player_data[player][5],
-                    "passing" : {
-                        "completions": player_data[player][6],
-                        "attempts": player_data[player][7],
-                        "yards": player_data[player][8],
-                        "touchdowns": player_data[player][9],
-                        "interceptions": player_data[player][10]
-                    },
-                    "rushing" : {
-                        "carries": player_data[player][11],
-                        "yards": player_data[player][12],
-                        "ydsPerCarry": player_data[player][13],
-                        "touchdowns": player_data[player][14]
-                    },
-                    "receiving" : {
-                        "targets": player_data[player][15],
-                        "receptions": player_data[player][16],
-                        "yards": player_data[player][17],
-                        "ydsPerReception": player_data[player][18],
-                        "touchdowns": player_data[player][19]
-                    },
+                    "games_played": player_data[player][4],
+                    "games_started": player_data[player][5],
+                    "completions": player_data[player][6],
+                    "attempts": player_data[player][7],
+                    "pass_yards": player_data[player][8],
+                    "pass_tds": player_data[player][9],
+                    "interceptions": player_data[player][10]
+                    "carries": player_data[player][11],
+                    "rush_yards": player_data[player][12],
+                    "yards_per_carry": player_data[player][13],
+                    "rush_tds": player_data[player][14]
+                    "targets": player_data[player][15],
+                    "receptions": player_data[player][16],
+                    "rec_yards": player_data[player][17],
+                    "yards_per_reception": player_data[player][18],
+                    "rec_tds": player_data[player][19]
             }
 
     return player_stats

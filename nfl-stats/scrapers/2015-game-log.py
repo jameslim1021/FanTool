@@ -35,16 +35,16 @@ def get_game_log(team_url):
                 "record": week_data[game][5],
                 "home": home,
                 "opponent": week_data[game][7],
-                "pointsFor": week_data[game][8],
-                "pointsAgainst": week_data[game][9],
-                "totalYardsFor": week_data[game][11],
-                "passYardsFor": week_data[game][12],
-                "rushYardsFor": week_data[game][13],
-                "turnovers Lost": week_data[game][14],
-                "totalYardsAgainst": week_data[game][16],
-                "passYardsAgainst": week_data[game][17],
-                "rushYardsAgainst": week_data[game][18],
-                "turnovers Forced": week_data[game][19]
+                "points_for": week_data[game][8],
+                "points_against": week_data[game][9],
+                "total_yards_for": week_data[game][11],
+                "pass_yards_for": week_data[game][12],
+                "rush_yards_for": week_data[game][13],
+                "turnovers_lost": week_data[game][14],
+                "total_yards_against": week_data[game][16],
+                "pass_yards_against": week_data[game][17],
+                "rush_yards_against": week_data[game][18],
+                "turnovers_forced": week_data[game][19]
             }
     return game_log
 
@@ -59,5 +59,4 @@ game_log_2015 = {
     "AFCwest": {"Broncos":get_game_log("den"), "Chiefs":get_game_log("kan"), "Raiders":get_game_log("rai"), "Chargers":get_game_log("sdg")}
 }
 
-# hello
 print game_log_2015

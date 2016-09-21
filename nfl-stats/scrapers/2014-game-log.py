@@ -30,21 +30,21 @@ def get_game_log(team_url):
             else:
                 home = True
             game_log[game] = {
-                "Date": week_data[game][1],
-                "Result": week_data[game][3],
-                "Record": week_data[game][5],
-                "Home": home,
-                "Opponent": week_data[game][7],
-                "PointsFor": week_data[game][8],
-                "PointsAgainst": week_data[game][9],
-                "TotalYardsFor": week_data[game][11],
-                "PassYardsFor": week_data[game][12],
-                "RushYardsFor": week_data[game][13],
-                "Turnovers Lost": week_data[game][14],
-                "TotalYardsAgainst": week_data[game][16],
-                "PassYardsAgainst": week_data[game][17],
-                "RushYardsAgainst": week_data[game][18],
-                "Turnovers Forced": week_data[game][19]
+                "date": week_data[game][1],
+                "result": week_data[game][3],
+                "record": week_data[game][5],
+                "home": home,
+                "opponent": week_data[game][7],
+                "points_for": week_data[game][8],
+                "points_against": week_data[game][9],
+                "total_yards_for": week_data[game][11],
+                "pass_yards_for": week_data[game][12],
+                "rush_yards_for": week_data[game][13],
+                "turnovers_lost": week_data[game][14],
+                "total_yards_against": week_data[game][16],
+                "pass_yards_against": week_data[game][17],
+                "rush_yards_against": week_data[game][18],
+                "turnovers_forced": week_data[game][19]
             }
     return game_log
 

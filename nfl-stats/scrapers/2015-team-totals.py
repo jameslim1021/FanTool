@@ -43,16 +43,16 @@ def get_team_totals():
             team_stats[team] = {
                 "name": team_data[team][0],
                 "points": team_data[team][2],
-                "totalYards": team_data[team][3],
+                "total_yards": team_data[team][3],
                 "turnovers": team_data[team][6],
                 "completions": team_data[team][9],
                 "attempts": team_data[team][10],
-                "passYards": team_data[team][11],
-                "passTds": team_data[team][12],
+                "pass_yards": team_data[team][11],
+                "pass_tds": team_data[team][12],
                 "interceptions": team_data[team][13],
                 "carries": team_data[team][16],
-                "rushYards": team_data[team][17],
-                "rushTds": team_data[team][18]
+                "rush_yards": team_data[team][17],
+                "rush_tds": team_data[team][18]
             }
 
     return team_stats

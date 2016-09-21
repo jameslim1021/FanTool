@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
           table.increments('id').primary();
           table.string('name').notNullable();
           table.string('position');
-          table.biginteger('age'); //added
+          table.string('age'); //added
       })]).then(function(){
 
         return knex.schema.createTable('teams',function (table) {

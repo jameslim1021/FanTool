@@ -1,6 +1,13 @@
 from bs4 import BeautifulSoup, Comment
 import requests, re
 
+import psycopg2
+
+conn = psycopg2.connect(database="nfl_stats", user="postgres", password="pass123", host="127.0.0.1", port="5432")
+print "Opened database successfully"
+
+cur = conn.cursor()
+
 def make_soup(url):
     r = requests.get(url)
     soupdata = BeautifulSoup(r.text, 'lxml')
@@ -31,7 +38,7 @@ def get_team_totals():
     for record in soupdata.findAll('tr'):
         for data in record.findAll('td'):
             data_array.append(data.text)
-        if len(data_array) > 0:
+        if len(data_array) > 0 and team < 33:
             team_data[team] = data_array
             data_array = []
             team = team + 1
@@ -40,8 +47,16 @@ def get_team_totals():
 
     for team in team_data:
         if len(team_data[team]) > 0:
+            team_name_array = team_data[team][0].split(' ')
+            if len(team_name_array) == 3:
+                city = team_name_array[0] + " " + team_name_array[1]
+                team_name = team_name_array[2]
+            else:
+                city = team_name_array[0]
+                team_name = team_name_array[1]
             team_stats[team] = {
-                "name": team_data[team][0],
+                "city": city,
+                "name": team_name,
                 "points": team_data[team][2],
                 "total_yards": team_data[team][3],
                 "turnovers": team_data[team][6],
@@ -57,4 +72,15 @@ def get_team_totals():
 
     return team_stats
 
-print get_team_totals()
+team_totals = get_team_totals()
+
+# insert into teams table
+for team in team_totals:
+
+    cur.execute("INSERT INTO TEAMS (CITY, NAME) \
+          VALUES (%s, %s);",
+          (team_totals[team]["city"], team_totals[team]["name"]))
+
+conn.commit()
+print "Records created successfully";
+conn.close()

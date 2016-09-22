@@ -86,7 +86,7 @@ exports.up = function(knex, Promise) {
 
         return knex.schema.createTable('players_games',function (table) {
             table.increments('id').primary();
-            table.biginteger('players_teams_id',20).references('id').inTable('players_teams').onDelete('cascade');
+            table.biginteger('players_team_id',20).references('id').inTable('players_teams').onDelete('cascade');
             table.biginteger('game_id',20).references('id').inTable('games').onDelete('cascade');
             table.biginteger('completions');
             table.biginteger('attempts');

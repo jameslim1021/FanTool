@@ -84,18 +84,16 @@ def get_game_log(team_url):
 
     return game_log
 
-# game_log_2015 = {
-#     "Redskins":get_game_log("was"), "Eagles":get_game_log("phi"), "Giants":get_game_log("nyg"), "Cowboys":get_game_log("dal"),
-#     "Vikings":get_game_log("min"), "Packers":get_game_log("gnb"), "Lions":get_game_log("det"), "Bears":get_game_log("chi"),
-#     "Panthers":get_game_log("car"), "Falcons":get_game_log("atl"), "Saints":get_game_log("nor"), "Buccaneers":get_game_log("tam"),
-#     "Cardinals":get_game_log("crd"), "Seahawks":get_game_log("sea"), "Rams":get_game_log("ram"), "49ers":get_game_log("sfo"),
-#     "Patriots":get_game_log("nwe"), "Jets":get_game_log("nyj"), "Bills":get_game_log("buf"), "Dolphins":get_game_log("mia"),
-#     "Bengals":get_game_log("cin"), "Steelers":get_game_log("pit"), "Ravens":get_game_log("rav"), "Browns":get_game_log("cle"),
-#     "Texans":get_game_log("htx"), "Colts":get_game_log("clt"), "Jaguars":get_game_log("jax"), "Titans":get_game_log("oti"),
-#     "Broncos":get_game_log("den"), "Chiefs":get_game_log("kan"), "Raiders":get_game_log("rai"), "Chargers":get_game_log("sdg")
-# }
-
-game_log_2015 = {"Redskins":get_game_log("was"), "Eagles":get_game_log("phi")}
+game_log_2015 = {
+    "Redskins":get_game_log("was"), "Eagles":get_game_log("phi"), "Giants":get_game_log("nyg"), "Cowboys":get_game_log("dal"),
+    "Vikings":get_game_log("min"), "Packers":get_game_log("gnb"), "Lions":get_game_log("det"), "Bears":get_game_log("chi"),
+    "Panthers":get_game_log("car"), "Falcons":get_game_log("atl"), "Saints":get_game_log("nor"), "Buccaneers":get_game_log("tam"),
+    "Cardinals":get_game_log("crd"), "Seahawks":get_game_log("sea"), "Rams":get_game_log("ram"), "49ers":get_game_log("sfo"),
+    "Patriots":get_game_log("nwe"), "Jets":get_game_log("nyj"), "Bills":get_game_log("buf"), "Dolphins":get_game_log("mia"),
+    "Bengals":get_game_log("cin"), "Steelers":get_game_log("pit"), "Ravens":get_game_log("rav"), "Browns":get_game_log("cle"),
+    "Texans":get_game_log("htx"), "Colts":get_game_log("clt"), "Jaguars":get_game_log("jax"), "Titans":get_game_log("oti"),
+    "Broncos":get_game_log("den"), "Chiefs":get_game_log("kan"), "Raiders":get_game_log("rai"), "Chargers":get_game_log("sdg")
+}
 
 for team in game_log_2015:
     for week in game_log_2015[team]:
@@ -103,13 +101,11 @@ for team in game_log_2015:
             {'name': team})
 
         team_id = cur.fetchall()[0]
-        print game_log_2015[team][week]["opponent"]
+
         cur.execute("SELECT id from teams where name=%(name)s;",
         {'name': game_log_2015[team][week]["opponent"]})
 
         opponent_id = cur.fetchall()[0]
-
-        print team_id, opponent_id
 
         cur.execute("INSERT INTO GAMES (TEAM_ID, OPPONENT_ID, SEASON, WEEK, RESULT, RECORD, HOME, POINTS_FOR, POINTS_AGAINST, TOTAL_YARDS_FOR, PASS_YARDS_FOR, RUSH_YARDS_FOR, TURNOVERS_LOST, TOTAL_YARDS_AGAINST, PASS_YARDS_AGAINST, RUSH_YARDS_AGAINST, TURNOVERS_FORCED) \
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",

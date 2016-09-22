@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import urllib2
 import psycopg2
+import re
 
 conn = psycopg2.connect(database="nfl_stats", user="postgres", password="pass123", host="127.0.0.1", port="5432")
 print "Opened database successfully"
@@ -16,6 +17,9 @@ team_map = {
     "IND":"Colts", "JAX":"Jaguars", "TEN":"Titans", "DEN":"Broncos", "KAN":"Chiefs",
     "OAK":"Raiders", "SDG":"Chargers", "2TM":"Multiple", "3TM":"Multiple"
 }
+
+# remove special characters from player names (*, +)
+regex = re.compile('[*+]')
 
 def make_soup(url):
     page = urllib2.urlopen(url)
@@ -45,7 +49,7 @@ def get_player_totals():
         if len(player_data[player]) > 0:
             if len(player_data[player][2]) != 0:
                 player_stats[player] = {
-                        "name": player_data[player][0],
+                        "name": regex.sub('', player_data[player][0]),
                         "team": player_data[player][1],
                         "position": player_data[player][2],
                         "age": player_data[player][3] if len(player_data[player][3]) > 0 else "0",
@@ -76,6 +80,11 @@ for player in player_totals:
     cur.execute("INSERT INTO PLAYERS (NAME, POSITION, AGE) \
           VALUES (%s, %s, %s);",
           (player_totals[player]["name"], player_totals[player]["position"], int(player_totals[player]["age"])))
+
+# handle edge case for players_games table
+cur.execute("INSERT INTO PLAYERS (NAME, POSITION, AGE) \
+      VALUES (%s, %s, %s);",
+      ('Bye Week', 'Bye Week', 0))
 
 # grab players.id, teams.id that match JSON object.
 # load data into players_teams table

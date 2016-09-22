@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 import urllib2
-from decimal import *
 import psycopg2
 
 conn = psycopg2.connect(database="nfl_stats", user="postgres", password="pass123", host="127.0.0.1", port="5432")

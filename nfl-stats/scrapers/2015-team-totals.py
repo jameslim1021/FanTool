@@ -84,6 +84,9 @@ for team in team_totals:
 cur.execute("INSERT INTO TEAMS (CITY, NAME) \
       VALUES (%s, %s);",
       ('Teams', 'Multiple'))
+cur.execute("INSERT INTO TEAMS (CITY, NAME) \
+      VALUES (%s, %s);",
+      ('Bye Week', 'Bye Week'))
 
 # insert team stat totals into teams_totals
 for team in team_totals:

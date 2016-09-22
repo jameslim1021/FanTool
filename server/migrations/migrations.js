@@ -36,20 +36,23 @@ exports.up = function(knex, Promise) {
 
         return knex.schema.createTable('games',function(table){
             table.increments('id').primary();
-            table.biginteger('home_team_id',20).references('id').inTable('teams').onDelete('cascade');
-            table.biginteger('away_team_id',20).references('id').inTable('teams').onDelete('cascade');
+            table.biginteger('team_id',20).references('id').inTable('teams').onDelete('cascade');
+            table.biginteger('opponent_id',20).references('id').inTable('teams').onDelete('cascade');
+            table.biginteger('season');
             table.biginteger('week');
-            table.biginteger('winner_id',20).references('id').inTable('teams').onDelete('cascade');
-            table.biginteger('home_points');
-            table.biginteger('home_total_yards');
-            table.biginteger('home_pass_yards');
-            table.biginteger('home_rush_yards');
-            table.biginteger('away_points');
-            table.biginteger('away_total_yards');
-            table.biginteger('away_pass_yards');
-            table.biginteger('away_rush_yards');
-            table.biginteger('turnovers_forced');
+            table.string('result');
+            table.string('record');
+            table.boolean('home');
+            table.biginteger('points_for');
+            table.biginteger('points_against');
+            table.biginteger('total_yards_for');
+            table.biginteger('pass_yards_for');
+            table.biginteger('rush_yards_for');
             table.biginteger('turnovers_lost');
+            table.biginteger('total_yards_against');
+            table.biginteger('pass_yards_against');
+            table.biginteger('rush_yards_against');
+            table.biginteger('turnovers_forced');
         });
       }).then(function(){
 

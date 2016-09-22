@@ -70,16 +70,14 @@ exports.up = function(knex, Promise) {
             table.biginteger('attempts');
             table.biginteger('pass_tds');
             table.biginteger('interceptions');
-            table.biginteger('pass_yds');
+            table.biginteger('pass_yards');
             table.biginteger('carries');
-            table.biginteger('rush_yds');
-            table.float('rush_avg');
+            table.biginteger('rush_yards');
             table.biginteger('rush_tds');
             table.biginteger('targets');
             table.biginteger('receptions');
-            table.biginteger('rec_yds');
+            table.biginteger('rec_yards');
             table.biginteger('rec_tds');
-            table.float('rec_avg');
         });
       }).then(function () {
 
@@ -91,16 +89,16 @@ exports.up = function(knex, Promise) {
             table.biginteger('attempts');
             table.biginteger('pass_tds');
             table.biginteger('interceptions');
-            table.biginteger('pass_yds');
+            table.biginteger('pass_yards');
             table.biginteger('times_sacked');
             table.biginteger('pass_long');
             table.biginteger('carries');
-            table.biginteger('rush_yds');
+            table.biginteger('rush_yards');
             table.biginteger('rush_tds');
             table.biginteger('rush_long');
             table.biginteger('targets');
             table.biginteger('receptions');
-            table.biginteger('rec_yds');
+            table.biginteger('rec_yards');
             table.biginteger('rec_tds');
             table.biginteger('rec_long');
             table.biginteger('fumbles');

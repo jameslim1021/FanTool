@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import urllib2
-
+from decimal import *
 import psycopg2
 
 conn = psycopg2.connect(database="nfl_stats", user="postgres", password="pass123", host="127.0.0.1", port="5432")
@@ -78,19 +78,37 @@ for player in player_totals:
           VALUES (%s, %s, %s);",
           (player_totals[player]["name"], player_totals[player]["position"], int(player_totals[player]["age"])))
 
+# grab players.id, teams.id that match JSON object.
+# load data into players_teams table
+# load data into players_totals table
 for player in player_totals:
     cur.execute("SELECT id from players where name=%(name)s and age=%(age)s;",
-                {'name': player_totals[player]["name"], 'age': int(player_totals[player]["age"])})
+        {'name': player_totals[player]["name"], 'age': int(player_totals[player]["age"])})
+
     player_id = cur.fetchall()[0]
 
     cur.execute("SELECT id from teams where name=%(name)s;",
-                {'name': team_map[player_totals[player]["team"]]})
+        {'name': team_map[player_totals[player]["team"]]})
 
     team_id = cur.fetchall()[0]
 
     cur.execute("INSERT INTO PLAYERS_TEAMS (PLAYER_ID, TEAM_ID, SEASON) \
-          VALUES (%s, %s, %s);",
-          (player_id, team_id, 2015))
+        VALUES (%s, %s, %s);",
+        (player_id, team_id, 2015))
+
+    cur.execute("SELECT id from players_teams where player_id=%(player_id)s;",
+        {'player_id': player_id})
+
+    player_team_id = cur.fetchall()[0]
+
+    cur.execute("INSERT INTO PLAYERS_TOTALS (PLAYERS_TEAM_ID, GAMES_PLAYED, GAMES_STARTED, COMPLETIONS, ATTEMPTS, PASS_TDS, INTERCEPTIONS, PASS_YARDS, CARRIES, RUSH_YARDS, RUSH_TDS, TARGETS, RECEPTIONS, REC_YARDS, REC_TDS) \
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
+        (player_team_id, int(player_totals[player]["games_played"]), int(player_totals[player]["games_started"]), int(player_totals[player]["completions"]),
+        int(player_totals[player]["attempts"]),int(player_totals[player]["pass_tds"]),int(player_totals[player]["interceptions"]),int(player_totals[player]["pass_yards"]),
+        int(player_totals[player]["carries"]),int(player_totals[player]["rush_yards"]),int(player_totals[player]["rush_tds"]),
+        int(player_totals[player]["targets"]),int(player_totals[player]["receptions"]),int(player_totals[player]["rec_yards"]),
+        int(player_totals[player]["rec_tds"])))
+
 
 conn.commit()
 print "Records created successfully";

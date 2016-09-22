@@ -28,7 +28,7 @@ team_map = {
     "SFO":"49ers", "NWE":"Patriots", "NYJ":"Jets", "BUF":"Bills", "MIA":"Dolphins",
     "CIN":"Bengals", "PIT":"Steelers", "BAL":"Ravens", "CLE":"Browns", "HOU":"Texans",
     "IND":"Colts", "JAX":"Jaguars", "TEN":"Titans", "DEN":"Broncos", "KAN":"Chiefs",
-    "OAK":"Raiders", "SDG":"Chargers", "2TM":"Multiple", "3TM":"Multiple"
+    "OAK":"Raiders", "SDG":"Chargers", "2TM":"Multiple", "3TM":"Multiple", "4TM":"Multiple"
 }
 
 date_map = {"September": {"month": "09", "year": "2015"}, "October": {"month": "10", "year": "2015"},
@@ -130,7 +130,7 @@ def get_player_log(url_obj):
                     "pass_yards": 0,
                     "pass_tds": 0,
                     "interceptions": 0,
-                    "num_sacks": 0,
+                    "times_sacked": 0,
                     "sack_yards": 0,
                     "pass_long": 0,
                     "carries": 0,

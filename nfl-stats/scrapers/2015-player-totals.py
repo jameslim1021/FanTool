@@ -15,7 +15,7 @@ team_map = {
     "SFO":"49ers", "NWE":"Patriots", "NYJ":"Jets", "BUF":"Bills", "MIA":"Dolphins",
     "CIN":"Bengals", "PIT":"Steelers", "BAL":"Ravens", "CLE":"Browns", "HOU":"Texans",
     "IND":"Colts", "JAX":"Jaguars", "TEN":"Titans", "DEN":"Broncos", "KAN":"Chiefs",
-    "OAK":"Raiders", "SDG":"Chargers", "2TM":"Multiple", "3TM":"Multiple"
+    "OAK":"Raiders", "SDG":"Chargers", "2TM":"Multiple", "3TM":"Multiple", "4TM":"Multiple"
 }
 
 # remove special characters from player names (*, +)
@@ -55,19 +55,17 @@ def get_player_totals():
                         "age": player_data[player][3] if len(player_data[player][3]) > 0 else "0",
                         "games_played": player_data[player][4],
                         "games_started": player_data[player][5],
-                        "completions": player_data[player][6],
+                        "completions": player_data[player][6] if len(player_data[player][6]) > 0 else "0",
                         "attempts": player_data[player][7],
                         "pass_yards": player_data[player][8],
                         "pass_tds": player_data[player][9],
                         "interceptions": player_data[player][10],
-                        "carries": player_data[player][11],
+                        "carries": player_data[player][11] if len(player_data[player][11]) > 0 else "0",
                         "rush_yards": player_data[player][12],
-                        "yards_per_carry": player_data[player][13],
                         "rush_tds": player_data[player][14],
-                        "targets": player_data[player][15],
-                        "receptions": player_data[player][16],
+                        "targets": player_data[player][15] if len(player_data[player][15]) > 0 else "0",
+                        "receptions": player_data[player][16] if len(player_data[player][16]) > 0 else "0",
                         "rec_yards": player_data[player][17],
-                        "yards_per_reception": player_data[player][18],
                         "rec_tds": player_data[player][19]
                 }
 

@@ -8,6 +8,16 @@ print "Opened database successfully"
 
 cur = conn.cursor()
 
+team_map = {
+    "WAS":"Redskins", "PHI":"Eagles", "NYG":"Giants", "DAL":"Cowboys", "MIN":"Vikings",
+    "GNB":"Packers", "DET":"Lions", "CHI":"Bears", "CAR":"Panthers", "ATL":"Falcons",
+    "NOR":"Saints", "TAM":"Buccaneers", "ARI":"Cardinals", "SEA":"Seahawks", "STL":"Rams",
+    "SFO":"49ers", "NWE":"Patriots", "NYJ":"Jets", "BUF":"Bills", "MIA":"Dolphins",
+    "CIN":"Bengals", "PIT":"Steelers", "BAL":"Ravens", "CLE":"Browns", "HOU":"Texans",
+    "IND":"Colts", "JAX":"Jaguars", "TEN":"Titans", "DEN":"Broncos", "KAN":"Chiefs",
+    "OAK":"Raiders", "SDG":"Chargers", "2TM":"Multiple", "3TM":"Multiple"
+}
+
 def make_soup(url):
     page = urllib2.urlopen(url)
     soupdata = BeautifulSoup(page, 'html.parser')
@@ -34,12 +44,12 @@ def get_player_totals():
 
     for player in player_data:
         if len(player_data[player]) > 0:
-            if len(player_data[player][2]) > 0:
+            if len(player_data[player][2]) != 0:
                 player_stats[player] = {
                         "name": player_data[player][0],
                         "team": player_data[player][1],
                         "position": player_data[player][2],
-                        "age": player_data[player][3],
+                        "age": player_data[player][3] if len(player_data[player][3]) > 0 else "0",
                         "games_played": player_data[player][4],
                         "games_started": player_data[player][5],
                         "completions": player_data[player][6],
@@ -64,10 +74,23 @@ player_totals = get_player_totals()
 
 # insert into players table
 for player in player_totals:
-
     cur.execute("INSERT INTO PLAYERS (NAME, POSITION, AGE) \
           VALUES (%s, %s, %s);",
-          (player_totals[player]["name"], player_totals[player]["position"], player_totals[player]["age"]))
+          (player_totals[player]["name"], player_totals[player]["position"], int(player_totals[player]["age"])))
+
+for player in player_totals:
+    cur.execute("SELECT id from players where name=%(name)s and age=%(age)s;",
+                {'name': player_totals[player]["name"], 'age': int(player_totals[player]["age"])})
+    player_id = cur.fetchall()[0]
+
+    cur.execute("SELECT id from teams where name=%(name)s;",
+                {'name': team_map[player_totals[player]["team"]]})
+
+    team_id = cur.fetchall()[0]
+
+    cur.execute("INSERT INTO PLAYERS_TEAMS (PLAYER_ID, TEAM_ID, SEASON) \
+          VALUES (%s, %s, %s);",
+          (player_id, team_id, 2015))
 
 conn.commit()
 print "Records created successfully";

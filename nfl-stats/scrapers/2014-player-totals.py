@@ -1,6 +1,13 @@
 from bs4 import BeautifulSoup
 import urllib2
 
+import psycopg2
+
+conn = psycopg2.connect(database="nfl_stats", user="postgres", password="pass123", host="127.0.0.1", port="5432")
+print "Opened database successfully"
+
+cur = conn.cursor()
+
 def make_soup(url):
     page = urllib2.urlopen(url)
     soupdata = BeautifulSoup(page, 'html.parser')
@@ -31,7 +38,7 @@ def get_player_totals():
                     "name": player_data[player][0],
                     "team": player_data[player][1],
                     "position": player_data[player][2],
-                    "age": player_data[player][3],
+                    "age": player_data[player][3] if len(player_data[player][3]) > 0 else "0",
                     "games_played": player_data[player][4],
                     "games_started": player_data[player][5],
                     "completions": player_data[player][6],
@@ -52,4 +59,15 @@ def get_player_totals():
 
     return player_stats
 
-print get_player_totals()
+player_totals = get_player_totals()
+
+# insert into players table
+for player in player_totals:
+
+    cur.execute("INSERT INTO PLAYERS (NAME, POSITION, AGE) \
+          VALUES (%s, %s, %s);",
+          (player_totals[player]["name"], player_totals[player]["position"], int(player_totals[player]["age"])))
+
+conn.commit()
+print "Records created successfully";
+conn.close()

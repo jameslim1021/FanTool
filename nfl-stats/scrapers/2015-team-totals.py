@@ -74,12 +74,26 @@ def get_team_totals():
 
 team_totals = get_team_totals()
 
-# insert into teams table
+# uncomment to insert city and names into teams table
 for team in team_totals:
-
     cur.execute("INSERT INTO TEAMS (CITY, NAME) \
           VALUES (%s, %s);",
           (team_totals[team]["city"], team_totals[team]["name"]))
+
+# added "multiple teams" row for players with more than one team in a season. scraped data has it as 2TM, 3TM, etc.
+cur.execute("INSERT INTO TEAMS (CITY, NAME) \
+      VALUES (%s, %s);",
+      ('Teams', 'Multiple'))
+
+# insert team stat totals into teams_totals
+for team in team_totals:
+    cur.execute("SELECT id from teams where name=%(name)s;",
+                {'name': team_totals[team]["name"]})
+    name_id = cur.fetchall()[0]
+    cur.execute("INSERT INTO TEAMS_TOTALS (TEAM_ID, SEASON, POINTS, TOTAL_YARDS, TURNOVERS, COMPLETIONS, ATTEMPTS, PASS_YARDS, PASS_TDS, INTERCEPTIONS, CARRIES, RUSH_YARDS, RUSH_TDS) \
+          VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
+          (name_id, 2015, int(team_totals[team]["points"]),int(team_totals[team]["total_yards"]),int(team_totals[team]["turnovers"]),int(team_totals[team]["completions"]),int(team_totals[team]["attempts"]),int(team_totals[team]["pass_yards"]),
+          int(team_totals[team]["pass_tds"]),int(team_totals[team]["interceptions"]),int(team_totals[team]["carries"]),int(team_totals[team]["rush_yards"]),int(team_totals[team]["rush_tds"])))
 
 conn.commit()
 print "Records created successfully";

@@ -14,11 +14,12 @@ app.service("ScoreService", function() {
 
 app.service("TeamService", function($http) {
     this.showTeams = function(query){
-        return $http.get(query)
-    }
+        return $http.get(query);
+    };
+    this.teamsData = {};
 });
 app.service("PlayerService", function($http) {
     this.showPlayers = function(query){
-        return $http.get(query)
-    }
+        return $http.get(query);
+    };
 });

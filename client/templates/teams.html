@@ -1,27 +1,30 @@
 <div class="teams-wrapper">
-    <table>
+    <a ng-click="clicky()">2016 /</a>
+    <a>2015 /</a>
+    <a>2014</a>
+    <table class="team-table">
         <thead>
             <tr>
-                <td ng-click="clicky()">AFC</td>
+                <th class="team-column" ng-click="sortType = 'team'; sortReverse = !sortReverse">Team</th>
+                <th>Record</th>
+                <th ng-click="sortType = 'points'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Points</th>
+                <th ng-click="sortType = 'total_yards'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Total YDs</th>
+                <th ng-click="sortType = 'attempts'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Att</th>
+                <th ng-click="sortType = 'completions'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Cmp</th>
+                <th ng-click="sortType = 'pass_yards'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Pass YDs</th>
+                <th ng-click="sortType = 'pass_tds'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Pass TDs</th>
+                <th ng-click="sortType = 'interceptions'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Int</th>
+                <th ng-click="sortType = 'carries'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Carries</th>
+                <th ng-click="sortType = 'rush_tds'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Rush TDs</th>
+                <th ng-click="sortType = 'rush_yards'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Rush Yards</th>
+                <th ng-click="sortType = 'turnovers'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Turnovers</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>AFC West</td>
-                <td>Record</td>
-                <td>Points Gained</td>
-                <td>Pass Yds Gained</td>
-                <td>Rush Yds Gained</td>
-                <td>Rec Yds Gained</td>
-                <td>Pass Yds Allowed</td>
-                <td>Rush Yds Allowed</td>
-                <td>Rec Yds Allowed</td>
-                <td>Points Allowed</td>
-            </tr>
-            <!-- <tr ft-team-info ng-repeat="team in view.afcWest"></tr> -->
+            <tr ft-team-info team-result="team" ng-repeat="team in view.teams | orderBy:sortType:sortReverse"></tr>
         </tbody>
     </table>
     <canvas id="line" class="chart chart-line" chart-data="data"
-    chart-labels="view.teams" chart-dataset-override="datasetOverride">
+    chart-labels="view.teamNames" chart-dataset-override="datasetOverride">
     </canvas>
 </div>

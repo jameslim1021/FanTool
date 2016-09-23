@@ -1,6 +1,5 @@
 app.directive("ftTeamInfo", function() {
     return {
-        templateUrl: "../templates/team-info.html",
-        controller: "TeamsController"
+        templateUrl: "../templates/team-info.html"
     };
 });

@@ -31,9 +31,9 @@ team_map = {
     "OAK":"Raiders", "SDG":"Chargers", "2TM":"Multiple", "3TM":"Multiple", "4TM":"Multiple"
 }
 
-date_map = {"September": {"month": "09", "year": "2015"}, "October": {"month": "10", "year": "2015"},
-    "November": {"month": "11", "year": "2015"}, "December": {"month": "12", "year": "2015"},
-    "January": {"month": "01", "year": "2016"}}
+date_map = {"September": {"month": "09", "year": "2016"}, "October": {"month": "10", "year": "2016"},
+    "November": {"month": "11", "year": "2016"}, "December": {"month": "12", "year": "2016"},
+    "January": {"month": "01", "year": "2017"}}
 
 def team_abbrev(team):
     team_arr = team.split(" ")
@@ -59,7 +59,7 @@ def make_soup(url):
     return soupdata
 
 def get_game_log(team_url):
-    soup = make_soup("http://www.pro-football-reference.com/teams/" + team_url + "/2015.htm")
+    soup = make_soup("http://www.pro-football-reference.com/teams/" + team_url + "/2016.htm")
     table_stats = soup.find("table", {"id":"games"})
 
     data_array = []
@@ -89,7 +89,7 @@ def get_game_log(team_url):
             }
     return game_log
 
-game_log_2015 = {
+game_log_2016 = {
     "Redskins":get_game_log("was"), "Eagles":get_game_log("phi"), "Giants":get_game_log("nyg"), "Cowboys":get_game_log("dal"),
     "Vikings":get_game_log("min"), "Packers":get_game_log("gnb"), "Lions":get_game_log("det"), "Bears":get_game_log("chi"),
     "Panthers":get_game_log("car"), "Falcons":get_game_log("atl"), "Saints":get_game_log("nor"), "Buccaneers":get_game_log("tam"),
@@ -103,16 +103,16 @@ game_log_2015 = {
 url_info = {}
 
 # format for url
-for team in game_log_2015:
+for team in game_log_2016:
     url_info[team] = {}
-    for game in game_log_2015[team]:
+    for game in game_log_2016[team]:
         url_info[team][game] = {}
-        if len(game_log_2015[team][game]) > 0:
-            url_info[team][game]["date"] = format_date(game_log_2015[team][game]["date"])
-            if game_log_2015[team][game]["home"] == True:
+        if len(game_log_2016[team][game]) > 0:
+            url_info[team][game]["date"] = format_date(game_log_2016[team][game]["date"])
+            if game_log_2016[team][game]["home"] == True:
                 url_info[team][game]["city"] = url_team_map[team]
             else:
-                url_info[team][game]["city"] = game_log_2015[team][game]["opponent"]
+                url_info[team][game]["city"] = game_log_2016[team][game]["opponent"]
 
 def get_player_log(url_obj):
     player_log = {}
@@ -202,7 +202,7 @@ def get_player_log(url_obj):
     return player_log
 
 player_log = get_player_log(url_info)
-
+#
 for team in player_log:
     for week in player_log[team]:
         for player in player_log[team][week]:
@@ -232,7 +232,7 @@ for team in player_log:
                 if len(players_teams_result) == 0:
                     cur.execute("INSERT INTO PLAYERS_TEAMS (PLAYER_ID, TEAM_ID, SEASON) \
                         VALUES (%s, %s, %s) RETURNING id;",
-                        (player_id, team_id, 2015))
+                        (player_id, team_id, 2016))
 
                     players_team_id = cur.fetchone()[0]
                 else:

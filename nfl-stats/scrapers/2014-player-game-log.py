@@ -89,17 +89,16 @@ def get_game_log(team_url):
             }
     return game_log
 
-# game_log_2014 = {
-#     "Redskins":get_game_log("was"), "Eagles":get_game_log("phi"), "Giants":get_game_log("nyg"), "Cowboys":get_game_log("dal"),
-#     "Vikings":get_game_log("min"), "Packers":get_game_log("gnb"), "Lions":get_game_log("det"), "Bears":get_game_log("chi"),
-#     "Panthers":get_game_log("car"), "Falcons":get_game_log("atl"), "Saints":get_game_log("nor"), "Buccaneers":get_game_log("tam"),
-#     "Cardinals":get_game_log("crd"), "Seahawks":get_game_log("sea"), "Rams":get_game_log("ram"), "49ers":get_game_log("sfo"),
-#     "Patriots":get_game_log("nwe"), "Jets":get_game_log("nyj"), "Bills":get_game_log("buf"), "Dolphins":get_game_log("mia"),
-#     "Bengals":get_game_log("cin"), "Steelers":get_game_log("pit"), "Ravens":get_game_log("rav"), "Browns":get_game_log("cle"),
-#     "Texans":get_game_log("htx"), "Colts":get_game_log("clt"), "Jaguars":get_game_log("jax"), "Titans":get_game_log("oti"),
-#     "Broncos":get_game_log("den"), "Chiefs":get_game_log("kan"), "Raiders":get_game_log("rai"), "Chargers":get_game_log("sdg")
-# }
-game_log_2014 = {"Redskins":get_game_log("was")}
+game_log_2014 = {
+    "Redskins":get_game_log("was"), "Eagles":get_game_log("phi"), "Giants":get_game_log("nyg"), "Cowboys":get_game_log("dal"),
+    "Vikings":get_game_log("min"), "Packers":get_game_log("gnb"), "Lions":get_game_log("det"), "Bears":get_game_log("chi"),
+    "Panthers":get_game_log("car"), "Falcons":get_game_log("atl"), "Saints":get_game_log("nor"), "Buccaneers":get_game_log("tam"),
+    "Cardinals":get_game_log("crd"), "Seahawks":get_game_log("sea"), "Rams":get_game_log("ram"), "49ers":get_game_log("sfo"),
+    "Patriots":get_game_log("nwe"), "Jets":get_game_log("nyj"), "Bills":get_game_log("buf"), "Dolphins":get_game_log("mia"),
+    "Bengals":get_game_log("cin"), "Steelers":get_game_log("pit"), "Ravens":get_game_log("rav"), "Browns":get_game_log("cle"),
+    "Texans":get_game_log("htx"), "Colts":get_game_log("clt"), "Jaguars":get_game_log("jax"), "Titans":get_game_log("oti"),
+    "Broncos":get_game_log("den"), "Chiefs":get_game_log("kan"), "Raiders":get_game_log("rai"), "Chargers":get_game_log("sdg")
+}
 
 url_info = {}
 
@@ -188,9 +187,9 @@ def get_player_log(url_obj):
                         "carries": player_data_array[i][10],
                         "rush_yards": player_data_array[i][11],
                         "rush_tds": player_data_array[i][12],
-                        "rush_long": player_data_array[i][13],
-                        "targets": player_data_array[i][14],
-                        "receptions": player_data_array[i][15],
+                        "rush_long": player_data_array[i][13] if len(player_data_array[i][13]) > 0 else "0",
+                        "targets": player_data_array[i][14] if len(player_data_array[i][14]) > 0 else "0",
+                        "receptions": player_data_array[i][15] if len(player_data_array[i][15]) > 0 else "0",
                         "rec_yards": player_data_array[i][16],
                         "rec_tds": player_data_array[i][17],
                         "rec_long": player_data_array[i][18],

@@ -54,7 +54,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                     templateUrl: '../templates/players.html',
                     controller: 'PlayersController',
                     resolve: {
-                        teams: function(PlayerService) {
+                        players: function(PlayerService) {
                             return PlayerService.showPlayers('/api/players');
                         }
                     }

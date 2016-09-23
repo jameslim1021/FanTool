@@ -4,7 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var teams = require('./api/teams.js');
+var players = require('./api/players.js');
 var app = express();
 
 // uncomment after placing your favicon in /public
@@ -17,6 +18,9 @@ app.use('/css',express.static(path.join(__dirname, '../client/css')));
 app.use('/js',express.static(path.join(__dirname, '../client/js')));
 app.use('/templates',express.static(path.join(__dirname, '../client/templates')));
 app.use('/images',express.static(path.join(__dirname, '../client/images')));
+
+app.use('/api/teams/', teams);
+app.use('/api/players/', players);
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../client', 'index.html'));

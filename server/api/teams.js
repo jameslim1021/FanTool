@@ -2,13 +2,17 @@ var express = require('express');
 var router = express.Router();
 var knex = require('../db/knex');
 
-router.get('/teams', function(req, res, next) {
-	knex.select().table('teams').then(function(teams) {
-		res.json(teams);
-	});
+router.get('/', function(req, res, next) {
+	knex('teams')
+	.select('teams.name as team', 'teams_totals.*')
+	.join('teams_totals', 'teams_totals.team_id', 'teams.id')
+	.where('season',2015)
+	.then(function(result) {
+		res.send(result);
+	})
 });
 
-router.get('/teams/:id', function(req, res, next) {
+router.get('/:id', function(req, res, next) {
 	knex.select().table('teams').where({id: req.params.id}).then(function(teams) {
 		res.json(teams);
 	});

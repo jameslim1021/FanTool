@@ -1,4 +1,4 @@
-app.service("scoreService", function() {
+app.service("ScoreService", function() {
     this.settings = {};
     this.sendScores = function(passTD, int, passYD, rushTD, rushYD, recTD, rec, recYD) {
         this.settings.passTD = passTD;
@@ -12,6 +12,13 @@ app.service("scoreService", function() {
     };
 });
 
-app.service("teamService", function() {
-    // this.teams = $http.get("api/teams")
+app.service("TeamService", function($http) {
+    this.showTeams = function(query){
+        return $http.get(query)
+    }
+});
+app.service("PlayerService", function($http) {
+    this.showPlayers = function(query){
+        return $http.get(query)
+    }
 });

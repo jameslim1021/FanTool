@@ -1,6 +1,6 @@
 const app = angular.module("myApp", ["ui.router", "chart.js"]);
 
-app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider, $http) {
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
@@ -35,7 +35,29 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                 },
                 'mainContent': {
                     templateUrl: '../templates/teams.html',
-                    controller: 'TeamsController'
+                    controller: 'TeamsController',
+                    resolve: {
+                        teams: function(TeamService) {
+                            return TeamService.showTeams('/api/teams');
+                        }
+                    }
+                }
+            }
+        })
+        .state('players', {
+            url:'/players',
+            views: {
+                'header': {
+                    templateUrl: '../templates/header.html'
+                },
+                'mainContent': {
+                    templateUrl: '../templates/players.html',
+                    controller: 'PlayersController',
+                    resolve: {
+                        teams: function(PlayerService) {
+                            return PlayerService.showPlayers('/api/players');
+                        }
+                    }
                 }
             }
         })

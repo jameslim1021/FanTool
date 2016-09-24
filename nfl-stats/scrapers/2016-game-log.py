@@ -10,7 +10,7 @@ cur = conn.cursor()
 team_map = {
     "WAS":"Redskins", "PHI":"Eagles", "NYG":"Giants", "DAL":"Cowboys", "MIN":"Vikings",
     "GNB":"Packers", "DET":"Lions", "CHI":"Bears", "CAR":"Panthers", "ATL":"Falcons",
-    "NOR":"Saints", "TAM":"Buccaneers", "ARI":"Cardinals", "SEA":"Seahawks", "STL":"Rams",
+    "NOR":"Saints", "TAM":"Buccaneers", "ARI":"Cardinals", "SEA":"Seahawks", "LAR":"Rams",
     "SFO":"49ers", "NWE":"Patriots", "NYJ":"Jets", "BUF":"Bills", "MIA":"Dolphins",
     "CIN":"Bengals", "PIT":"Steelers", "BAL":"Ravens", "CLE":"Browns", "HOU":"Texans",
     "IND":"Colts", "JAX":"Jaguars", "TEN":"Titans", "DEN":"Broncos", "KAN":"Chiefs",
@@ -40,47 +40,48 @@ def get_game_log(team_url):
 
     game_log = {}
     for game in week_data:
-        if game > 0:
-            if week_data[game][6] == "@":
-                home = False
-            else:
-                home = True
-            if week_data[game][7] == "Bye Week":
-                game_log[game] = {
-                    "opponent": "Bye Week",
-                    "result": "Bye Week",
-                    "record": "Bye Week",
-                    "home": home,
-                    "points_for": 0,
-                    "points_against": 0,
-                    "total_yards_for": 0,
-                    "pass_yards_for": 0,
-                    "rush_yards_for": 0,
-                    "turnovers_lost": 0,
-                    "total_yards_against": 0,
-                    "pass_yards_against": 0,
-                    "rush_yards_against": 0,
-                    "turnovers_forced": 0
-                }
-            else:
-                opponent_array = week_data[game][7].split(" ")
-                opponent = opponent_array[len(opponent_array)-1]
-                game_log[game] = {
-                    "opponent": opponent,
-                    "result": week_data[game][3],
-                    "record": week_data[game][5],
-                    "home": home,
-                    "points_for": week_data[game][8],
-                    "points_against": week_data[game][9],
-                    "total_yards_for": week_data[game][11],
-                    "pass_yards_for": week_data[game][12],
-                    "rush_yards_for": week_data[game][13],
-                    "turnovers_lost": week_data[game][14] if len(week_data[game][14]) > 0 else 0,
-                    "total_yards_against": week_data[game][16],
-                    "pass_yards_against": week_data[game][17],
-                    "rush_yards_against": week_data[game][18],
-                    "turnovers_forced": week_data[game][19] if len(week_data[game][19]) > 0 else 0
-                }
+        if game > 1:
+            if week_data[game][2] != 'preview':
+                if week_data[game][6] == "@":
+                    home = False
+                else:
+                    home = True
+                if week_data[game][7] == "Bye Week":
+                    game_log[game] = {
+                        "opponent": "Bye Week",
+                        "result": "Bye Week",
+                        "record": "Bye Week",
+                        "home": home,
+                        "points_for": 0,
+                        "points_against": 0,
+                        "total_yards_for": 0,
+                        "pass_yards_for": 0,
+                        "rush_yards_for": 0,
+                        "turnovers_lost": 0,
+                        "total_yards_against": 0,
+                        "pass_yards_against": 0,
+                        "rush_yards_against": 0,
+                        "turnovers_forced": 0
+                    }
+                else:
+                    opponent_array = week_data[game][7].split(" ")
+                    opponent = opponent_array[len(opponent_array)-1]
+                    game_log[game] = {
+                        "opponent": opponent,
+                        "result": week_data[game][3],
+                        "record": week_data[game][5],
+                        "home": home,
+                        "points_for": week_data[game][8],
+                        "points_against": week_data[game][9],
+                        "total_yards_for": week_data[game][11],
+                        "pass_yards_for": week_data[game][12],
+                        "rush_yards_for": week_data[game][13],
+                        "turnovers_lost": week_data[game][14] if len(week_data[game][14]) > 0 else 0,
+                        "total_yards_against": week_data[game][16],
+                        "pass_yards_against": week_data[game][17],
+                        "rush_yards_against": week_data[game][18],
+                        "turnovers_forced": week_data[game][19] if len(week_data[game][19]) > 0 else 0
+                    }
 
     return game_log
 
@@ -97,15 +98,28 @@ game_log_2016 = {
 
 for team in game_log_2016:
     for week in game_log_2016[team]:
-        cur.execute("SELECT id from teams where name=%(name)s;",
-            {'name': team})
+        if team == 'Rams':
+            cur.execute("SELECT id from teams where name=%(name)s and city=%(city)s;",
+                {'name': team, 'city':'Los Angeles'})
 
-        team_id = cur.fetchall()[0]
+            team_id = cur.fetchall()[0]
+            print game_log_2016[team][week]
 
-        cur.execute("SELECT id from teams where name=%(name)s;",
-        {'name': game_log_2016[team][week]["opponent"]})
+        else:
+            cur.execute("SELECT id from teams where name=%(name)s;",
+                {'name': team})
 
-        opponent_id = cur.fetchall()[0]
+            team_id = cur.fetchall()[0]
+            if game_log_2016[team][week]["opponent"] == "Rams":
+                cur.execute("SELECT id from teams where name=%(name)s and city=%(city)s;",
+                    {'name': game_log_2016[team][week]["opponent"], 'city':'Los Angeles'})
+
+                opponent_id = cur.fetchall()[0]
+            else:
+                cur.execute("SELECT id from teams where name=%(name)s;",
+                    {'name': game_log_2016[team][week]["opponent"]})
+
+                opponent_id = cur.fetchall()[0]
 
         cur.execute("INSERT INTO GAMES (TEAM_ID, OPPONENT_ID, SEASON, WEEK, RESULT, RECORD, HOME, POINTS_FOR, POINTS_AGAINST, TOTAL_YARDS_FOR, PASS_YARDS_FOR, RUSH_YARDS_FOR, TURNOVERS_LOST, TOTAL_YARDS_AGAINST, PASS_YARDS_AGAINST, RUSH_YARDS_AGAINST, TURNOVERS_FORCED) \
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",

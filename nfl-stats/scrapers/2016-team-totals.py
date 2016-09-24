@@ -59,7 +59,7 @@ def get_team_totals():
                 "name": team_name,
                 "points": team_data[team][2],
                 "total_yards": team_data[team][3],
-                "turnovers": team_data[team][6],
+                "turnovers": team_data[team][6] if len(team_data[team][6]) > 0 else 0,
                 "completions": team_data[team][9],
                 "attempts": team_data[team][10],
                 "pass_yards": team_data[team][11],
@@ -74,17 +74,23 @@ def get_team_totals():
 
 team_totals = get_team_totals()
 
-# uncomment to insert city and names into teams table
+# delete 2016 teams_totals rows
+cur.execute("DELETE FROM TEAMS_TOTALS where season=%(season)s;",
+        {'season':2016})
+
 for team in team_totals:
 
-    cur.execute("SELECT id from teams where name=%(name)s;",
-                {'name': team_totals[team]["name"]})
+    cur.execute("SELECT id from teams where name=%(name)s and city=%(city)s;",
+                {'name': team_totals[team]["name"],'city': team_totals[team]["city"]})
     team_result = cur.fetchall()
     if len(team_result) == 0:
         cur.execute("INSERT INTO TEAMS (CITY, NAME) \
         VALUES (%s, %s);",
         (team_totals[team]["city"], team_totals[team]["name"]))
     else:
+        cur.execute("SELECT id from teams where name=%(name)s and city=%(city)s;",
+            {'name': team_totals[team]["name"],'city': team_totals[team]["city"]})
+        team_result = cur.fetchall()
         team_id = team_result[0]
         cur.execute("INSERT INTO TEAMS_TOTALS (TEAM_ID, SEASON, POINTS, TOTAL_YARDS, TURNOVERS, COMPLETIONS, ATTEMPTS, PASS_YARDS, PASS_TDS, INTERCEPTIONS, CARRIES, RUSH_YARDS, RUSH_TDS) \
               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",

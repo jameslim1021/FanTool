@@ -24,7 +24,7 @@ url_team_map = {"Redskins":"was", "Eagles":"phi", "Giants":"nyg", "Cowboys":"dal
 team_map = {
     "WAS":"Redskins", "PHI":"Eagles", "NYG":"Giants", "DAL":"Cowboys", "MIN":"Vikings",
     "GNB":"Packers", "DET":"Lions", "CHI":"Bears", "CAR":"Panthers", "ATL":"Falcons",
-    "NOR":"Saints", "TAM":"Buccaneers", "ARI":"Cardinals", "SEA":"Seahawks", "STL":"Rams",
+    "NOR":"Saints", "TAM":"Buccaneers", "ARI":"Cardinals", "SEA":"Seahawks", "LAR":"Rams",
     "SFO":"49ers", "NWE":"Patriots", "NYJ":"Jets", "BUF":"Bills", "MIA":"Dolphins",
     "CIN":"Bengals", "PIT":"Steelers", "BAL":"Ravens", "CLE":"Browns", "HOU":"Texans",
     "IND":"Colts", "JAX":"Jaguars", "TEN":"Titans", "DEN":"Broncos", "KAN":"Chiefs",
@@ -77,16 +77,17 @@ def get_game_log(team_url):
     game_log = {}
 
     for game in week_data:
-        if game > 0:
-            if week_data[game][6] == "@":
-                home = False
-            else:
-                home = True
-            game_log[game] = {
-                "date": week_data[game][1],
-                "home": home,
-                "opponent": team_abbrev(week_data[game][7])
-            }
+        if game > 1:
+            if week_data[game][2] != 'preview':
+                if week_data[game][6] == "@":
+                    home = False
+                else:
+                    home = True
+                game_log[game] = {
+                    "date": week_data[game][1],
+                    "home": home,
+                    "opponent": team_abbrev(week_data[game][7])
+                }
     return game_log
 
 game_log_2016 = {
@@ -206,10 +207,16 @@ player_log = get_player_log(url_info)
 for team in player_log:
     for week in player_log[team]:
         for player in player_log[team][week]:
-            cur.execute("SELECT id from teams where name=%(name)s;",
-                {'name': player_log[team][week][player]["team"]})
+            if team == 'Rams':
+                cur.execute("SELECT id from teams where name=%(name)s and city=%(city)s;",
+                    {'name': team, 'city':'Los Angeles'})
 
-            team_id = cur.fetchall()[0]
+                team_id = cur.fetchall()[0]
+            else:
+                cur.execute("SELECT id from teams where name=%(name)s;",
+                    {'name': team})
+
+                team_id = cur.fetchall()[0]
 
             cur.execute("SELECT id from players where name=%(name)s;",
             {'name': player})

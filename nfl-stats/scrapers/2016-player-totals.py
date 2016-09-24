@@ -11,7 +11,7 @@ cur = conn.cursor()
 team_map = {
     "WAS":"Redskins", "PHI":"Eagles", "NYG":"Giants", "DAL":"Cowboys", "MIN":"Vikings",
     "GNB":"Packers", "DET":"Lions", "CHI":"Bears", "CAR":"Panthers", "ATL":"Falcons",
-    "NOR":"Saints", "TAM":"Buccaneers", "ARI":"Cardinals", "SEA":"Seahawks", "STL":"Rams",
+    "NOR":"Saints", "TAM":"Buccaneers", "ARI":"Cardinals", "SEA":"Seahawks", "LAR":"Rams",
     "SFO":"49ers", "NWE":"Patriots", "NYJ":"Jets", "BUF":"Bills", "MIA":"Dolphins",
     "CIN":"Bengals", "PIT":"Steelers", "BAL":"Ravens", "CLE":"Browns", "HOU":"Texans",
     "IND":"Colts", "JAX":"Jaguars", "TEN":"Titans", "DEN":"Broncos", "KAN":"Chiefs",
@@ -92,11 +92,16 @@ for player in player_totals:
         {'name': player_totals[player]["name"], 'age': int(player_totals[player]["age"])})
 
     player_id = cur.fetchall()[0]
+    if player_totals[player]["team"] == 'LAR':
+        cur.execute("SELECT id from teams where name=%(name)s and city=%(city)s;",
+            {'name': team_map[player_totals[player]["team"]], 'city':'Los Angeles'})
 
-    cur.execute("SELECT id from teams where name=%(name)s;",
-        {'name': team_map[player_totals[player]["team"]]})
+        team_id = cur.fetchall()[0]
+    else:
+        cur.execute("SELECT id from teams where name=%(name)s;",
+            {'name': team_map[player_totals[player]["team"]]})
 
-    team_id = cur.fetchall()[0]
+        team_id = cur.fetchall()[0]
 
     cur.execute("INSERT INTO PLAYERS_TEAMS (PLAYER_ID, TEAM_ID, SEASON) \
         VALUES (%s, %s, %s);",

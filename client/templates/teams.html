@@ -6,7 +6,8 @@
         <thead>
             <tr>
                 <th class="team-column" ng-click="sortType = 'team'; sortReverse = !sortReverse">Team</th>
-                <th>Record</th>
+                <th ng-click="sortType = 'wins'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Wins</th>
+                <th ng-click="sortType = 'losses'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Losses</th>
                 <th ng-click="sortType = 'points'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Points</th>
                 <th ng-click="sortType = 'total_yards'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Total YDs</th>
                 <th ng-click="sortType = 'attempts'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Att</th>

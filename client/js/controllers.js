@@ -18,10 +18,10 @@ app.controller("PlayersController", function($scope, PlayerService, players) {
 app.controller("TeamsController", function($scope, TeamService, teams) {
     $scope.view = {};
     $scope.clicky = function () {
-        console.log($scope.view.label);
+        console.log(teams.data);
     };
 
-    TeamService.teamsData = teams.data
+    TeamService.teamsData = teams.data;
     $scope.view.teams = TeamService.teamsData;
 
     $scope.cityTeamMap = {"Redskins":"Washington ", "Eagles":"Philadelphia ", "Giants":"New York ", "Cowboys":"Dallas ",
@@ -35,6 +35,8 @@ app.controller("TeamsController", function($scope, TeamService, teams) {
 
     // convert numbers from string to int type
     for (let i = 0; i < teams.data.length; i++) {
+        teams.data[i].wins = parseInt(teams.data[i].record.split('-')[0]);
+        teams.data[i].losses = parseInt(teams.data[i].record.split('-')[1]);
         teams.data[i].points = parseInt(teams.data[i].points);
         teams.data[i].total_yards = parseInt(teams.data[i].total_yards);
         teams.data[i].attempts = parseInt(teams.data[i].attempts);
@@ -58,11 +60,22 @@ app.controller("TeamsController", function($scope, TeamService, teams) {
         $scope.datasetOverride = [];
         $scope.view.teamNames = [];
         chartData = [];
-        if (sortDir) {
-            teams.data.sort((a,b)=>{return a[dataType]-b[dataType];});
+        // sort data based on what column was clicked
+        if (dataType === 'record') {
+            if (sortDir) {
+                teams.data.sort((a,b)=>{return parseInt(a[dataType].split('-')[0])-parseInt(b[dataType].split('-')[0]);});
+                console.log(teams.data)
+            } else {
+                teams.data.sort((a,b)=>{return parseInt(b[dataType].split('-')[0])-parseInt(a[dataType].split('-')[0]);});
+            }
         } else {
-            teams.data.sort((a,b)=>{return b[dataType]-a[dataType];});
+            if (sortDir) {
+                teams.data.sort((a,b)=>{return a[dataType]-b[dataType];});
+            } else {
+                teams.data.sort((a,b)=>{return b[dataType]-a[dataType];});
+            }
         }
+        // push data into array and names sorted according to data
         for (let i = 0; i < teams.data.length; i++) {
             chartData.push(parseInt(teams.data[i][dataType]));
             $scope.view.teamNames.push(teams.data[i].team);
@@ -76,7 +89,7 @@ app.controller("TeamsController", function($scope, TeamService, teams) {
                     type: 'line',
                     backgroundColor: "hsla(160, 50%, 50%, 0.3)",
                     hoverBorderColor: "rgba(255,99,132,1)"
-                  })
+                });
     };
 
 });

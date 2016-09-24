@@ -4,9 +4,12 @@ var knex = require('../db/knex');
 
 router.get('/', function(req, res, next) {
 	knex('teams')
-	.select('teams.name as team', 'teams_totals.*')
+	.select('teams.name as team', 'games.record as record', 'teams_totals.*')
 	.join('teams_totals', 'teams_totals.team_id', 'teams.id')
-	.where('season',2015)
+	.join('games', 'games.team_id', 'teams.id')
+	.where('teams_totals.season',2015)
+	.where('games.week',17)
+	.where('games.season',2015)
 	.then(function(result) {
 		res.send(result);
 	})

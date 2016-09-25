@@ -44,6 +44,23 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                 }
             }
         })
+        .state('teams.year', {
+            url:'/:year',
+            views: {
+                'header': {
+                    templateUrl: '../templates/header.html'
+                },
+                'mainContent': {
+                    templateUrl: '../templates/teams.html',
+                    resolve: {
+                        teams: ['$stateParams', 'TeamService', function($stateParams, TeamService) {
+                            console.log($stateParams.year)
+                            return TeamService.showTeams('/api/teams/' + $stateParams.year);
+                        }]
+                    }
+                }
+            }
+        })
         .state('players', {
             url:'/players',
             views: {

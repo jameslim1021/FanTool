@@ -7,17 +7,25 @@ router.get('/', function(req, res, next) {
 	.select('teams.name as team', 'games.record as record', 'teams_totals.*')
 	.join('teams_totals', 'teams_totals.team_id', 'teams.id')
 	.join('games', 'games.team_id', 'teams.id')
-	.where('teams_totals.season',2015)
-	.where('games.week',17)
-	.where('games.season',2015)
+	.where('teams_totals.season',2016)
+	.where('games.week',3)
+	.where('games.season',2016)
 	.then(function(result) {
 		res.send(result);
-	})
+	});
 });
 
-router.get('/:id', function(req, res, next) {
-	knex.select().table('teams').where({id: req.params.id}).then(function(teams) {
-		res.json(teams);
+router.get('/:year', function(req, res, next) {
+	knex('teams')
+	.select('teams.name as team', 'games.record as record', 'teams_totals.*')
+	.join('teams_totals', 'teams_totals.team_id', 'teams.id')
+	.join('games', 'games.team_id', 'teams.id')
+	.where('teams_totals.season', parseInt(req.params.year))
+	.where('games.week',17)
+	.where('games.season', parseInt(req.params.year))
+	.then(function(result) {
+		console.log(result)
+		res.send(result);
 	});
 });
 

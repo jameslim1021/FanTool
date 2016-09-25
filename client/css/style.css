@@ -4,10 +4,10 @@ html {
 }
 
 body {
-  font: 16px Helvetica, Arial, sans-serif;
-  background-color: hsla(160, 50%, 50%, 1);
-  overflow: auto;
-  height: 100%
+    font: 16px Helvetica, Arial, sans-serif;
+    background-color: hsla(160, 50%, 50%, 1);
+    overflow: auto;
+    height: 100%
 }
 
 * {
@@ -92,26 +92,52 @@ input[type=text] {
 }
 
 .team-table {
-    width: auto;
+    width: 70%;
     table-layout: fixed;
+    margin: 0 auto;
     margin-bottom: 2em;
-    /*background-color: #FFFFFF;*/
+    white-space: nowrap;
 }
 
 .teams-wrapper a, th {
     font-size: 1.1em;
+    font-family: 'Exo', sans-serif;
     /*letter-spacing: 0.075em;*/
 }
 
+.players-table {
+    display: block;
+    height: 500px;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+
 table, th, td {
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     border-collapse: collapse;
     vertical-align: top;
     text-align: right;
     padding: 7px;
 }
-.team-column {
+
+table, th {
+    font-size: 0.9rem;
+}
+
+table td {
+    /*white-space: nowrap;*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.8rem;
+}
+
+.header-column {
     text-align: left;
+    width: auto;
+}
+
+.data-column {
+    width: auto;
 }
 
 tbody tr:hover {

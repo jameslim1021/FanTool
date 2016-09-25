@@ -4,7 +4,7 @@ var knex = require('../db/knex');
 
 router.get('/', function(req, res, next) {
 	knex('players')
-	.select('players.name as name', 'teams.name as team', 'players_totals.*')
+	.select('players.name as name', 'players.position as position', 'teams.name as team', 'players_totals.*')
 	.join('players_teams', 'players_teams.player_id', 'players.id')
 	.join('teams', 'players_teams.team_id', 'teams.id')
 	.join('players_totals', 'players_totals.players_team_id', 'players_teams.id')

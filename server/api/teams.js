@@ -11,6 +11,7 @@ router.get('/', function(req, res, next) {
 	.where('games.week',3)
 	.where('games.season',2016)
 	.then(function(result) {
+		console.log('/teams')
 		res.send(result);
 	});
 });
@@ -24,7 +25,7 @@ router.get('/:year', function(req, res, next) {
 	.where('games.week',17)
 	.where('games.season', parseInt(req.params.year))
 	.then(function(result) {
-		console.log(result)
+		console.log('/teams/:year')
 		res.send(result);
 	});
 });

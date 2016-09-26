@@ -41,7 +41,7 @@ def get_game_log(team_url):
     game_log = {}
     for game in week_data:
         if game > 1:
-            if week_data[game][2] != 'preview':
+            if week_data[game][2] != 'preview' and len(week_data[game][3]) != 0:
                 if week_data[game][6] == "@":
                     home = False
                 else:

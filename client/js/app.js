@@ -34,13 +34,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                     templateUrl: '../templates/header.html'
                 },
                 'mainContent': {
-                    templateUrl: '../templates/teams.html',
-                    controller: 'TeamsController',
-                    resolve: {
-                        teams: function(TeamService) {
-                            return TeamService.showTeams('/api/teams');
-                        }
-                    }
+                    templateUrl: '../templates/teams-main.html',
                 }
             }
         })
@@ -50,8 +44,9 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                 'header': {
                     templateUrl: '../templates/header.html'
                 },
-                'mainContent': {
-                    templateUrl: '../templates/teams.html',
+                'teamContent': {
+                    templateUrl: '../templates/teams-content.html',
+                    controller: 'TeamsController',
                     resolve: {
                         teams: ['$stateParams', 'TeamService', function($stateParams, TeamService) {
                             console.log($stateParams.year)
@@ -68,12 +63,40 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                     templateUrl: '../templates/header.html'
                 },
                 'mainContent': {
-                    templateUrl: '../templates/players.html',
-                    controller: 'PlayersController',
+                    templateUrl: '../templates/players-main.html',
+                }
+            }
+        })
+        .state('players.year', {
+            url:'/:year',
+            views: {
+                'header': {
+                    templateUrl: '../templates/header.html'
+                },
+                'playerContent': {
+                    templateUrl: '../templates/player-content.html',
+                    controller: 'PlayersAllController',
                     resolve: {
-                        players: function(PlayerService) {
-                            return PlayerService.showPlayers('/api/players');
-                        }
+                        playersAll: ['$stateParams', 'PlayerService', function($stateParams, PlayerService) {
+                            return PlayerService.showAllPlayers('/api/players/' + $stateParams.year);
+                        }]
+                    }
+                }
+            }
+        })
+        .state('players.year.id', {
+            url:'/:id',
+            views: {
+                'header': {
+                    templateUrl: '../templates/header.html'
+                },
+                'playerContent': {
+                    templateUrl: '../templates/player-page.html',
+                    controller: 'PlayersIndividualController',
+                    resolve: {
+                        playersIndividual: ['$stateParams', 'PlayerService', function($stateParams, PlayerService) {
+                            return PlayerService.showIndividualPlayer('/api/players/' + $stateParams.year + '/' + $stateParams.id);
+                        }]
                     }
                 }
             }

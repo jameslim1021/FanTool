@@ -77,7 +77,7 @@ def get_game_log(team_url):
     game_log = {}
 
     for game in week_data:
-        if game > 0:
+        if game > 1:
             if week_data[game][6] == "@":
                 home = False
             else:

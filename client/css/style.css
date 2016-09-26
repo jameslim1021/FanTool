@@ -1,6 +1,8 @@
-html {
-    overflow: hidden;
-    height: 100%;
+header {
+    width: 100%;
+    height: 6em;
+    top: 0;
+    background-color: #FFFFFF;
 }
 
 body {
@@ -10,6 +12,11 @@ body {
     height: 100%
 }
 
+html {
+    overflow: hidden;
+    height: 100%;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -17,7 +24,7 @@ body {
 .header-wrapper {
     width: 100%;
     margin: 0;
-    margin-bottom: 45px;
+    margin-bottom: 40px;
 }
 
 .wrapper {
@@ -30,13 +37,6 @@ body {
 .home-content {
     padding: 10em;
     text-align: center;
-}
-
-header {
-    width: 100%;
-    height: 5.5em;
-    top: 0;
-    background-color: #FFFFFF;
 }
 
 nav {
@@ -92,24 +92,40 @@ input[type=text] {
 }
 
 .team-table {
-    width: 70%;
-    table-layout: fixed;
+    /*display: block;*/
+    height: 500px;
     margin: 0 auto;
-    margin-bottom: 2em;
-    white-space: nowrap;
+    /*overflow-y: scroll;*/
+    overflow-x: scroll;
 }
 
-.teams-wrapper a, th {
+.team-table a, th {
     font-size: 1.1em;
     font-family: 'Exo', sans-serif;
-    /*letter-spacing: 0.075em;*/
+    letter-spacing: 0.075em;
 }
 
+.table-nav {
+
+}
+
+/*.teams-wrapper a, th {
+    font-size: 1.1em;
+    font-family: 'Exo', sans-serif;
+    letter-spacing: 0.075em;
+}*/
+
 .players-table {
-    display: block;
+    /*display: block;*/
     height: 500px;
-    overflow-y: scroll;
+    margin: 0 auto;
+    /*overflow-y: scroll;*/
     overflow-x: scroll;
+}
+.players-table a, th {
+    font-size: 1.1em;
+    font-family: 'Exo', sans-serif;
+    letter-spacing: 0.075em;
 }
 
 table, th, td {
@@ -125,7 +141,7 @@ table, th {
 }
 
 table td {
-    /*white-space: nowrap;*/
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 0.8rem;
@@ -137,12 +153,13 @@ table td {
 }
 
 .data-column {
-    width: auto;
+    width: 2.5em;
 }
 
 tbody tr:hover {
     background-color: hsla(55, 80%, 80%, 0.7);
 }
+
 thead th {
     background-color: hsla(160, 50%, 75%, 1);
     color: black;

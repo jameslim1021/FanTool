@@ -9,14 +9,14 @@ app.controller("ScoreController", function($scope, ScoreService) {
     };
 });
 
-app.controller("PlayersController", function($scope, PlayerService, players, ScoreService) {
+app.controller("PlayersAllController", function($scope, playersAll, ScoreService, $stateParams) {
     $scope.view = {};
     $scope.clicky = function () {
         console.log($scope.view.players);
     };
 
-    PlayerService.playersData = players.data;
-    $scope.view.players = PlayerService.playersData;
+    $scope.view.players = playersAll.data;
+
     $scope.view.settings = ScoreService.settings;
 
     function calculateFantasyPoints(player) {
@@ -30,26 +30,9 @@ app.controller("PlayersController", function($scope, PlayerService, players, Sco
         fantasyPoints += parseInt($scope.view.settings.rec) * parseInt(player.receptions);
         fantasyPoints += parseInt(player.rec_yards) / parseInt($scope.view.settings.recYD);
         return fantasyPoints;
-
     }
-    // convert numbers from string to int type
     for (let i = 0; i < $scope.view.players.length; i++) {
-        $scope.view.players[i].id = parseInt($scope.view.players[i].id);
-        $scope.view.players[i].attempts = parseInt($scope.view.players[i].attempts);
-        $scope.view.players[i].carries = parseInt($scope.view.players[i].carries);
-        $scope.view.players[i].completions = parseInt($scope.view.players[i].completions);
-        $scope.view.players[i].games_played = parseInt($scope.view.players[i].games_played);
-        $scope.view.players[i].games_started = parseInt($scope.view.players[i].games_started);
-        $scope.view.players[i].interceptions = parseInt($scope.view.players[i].interceptions);
-        $scope.view.players[i].pass_yards = parseInt($scope.view.players[i].pass_yards);
-        $scope.view.players[i].pass_tds = parseInt($scope.view.players[i].pass_tds);
-        $scope.view.players[i].rec_tds = parseInt($scope.view.players[i].rec_tds);
-        $scope.view.players[i].rec_yards = parseInt($scope.view.players[i].rec_yards);
-        $scope.view.players[i].rush_tds = parseInt($scope.view.players[i].rush_tds);
-        $scope.view.players[i].rush_yards = parseInt($scope.view.players[i].rush_yards);
-        $scope.view.players[i].receptions = parseInt($scope.view.players[i].receptions);
-        $scope.view.players[i].targets = parseInt($scope.view.players[i].targets);
-        $scope.view.players[i].fantasy = calculateFantasyPoints($scope.view.players[i]);
+        playersAll.data[i].fantasy = calculateFantasyPoints(playersAll.data[i]);
     }
 
     var chartData = [];
@@ -88,17 +71,15 @@ app.controller("PlayersController", function($scope, PlayerService, players, Sco
             fontSize: '70px'
         }
     };
-
 });
 
-app.controller("TeamsController", function($scope, TeamService, teams) {
+app.controller("TeamsController", function($scope, teams) {
     $scope.view = {};
     $scope.clicky = function () {
         console.log(teams.data);
     };
 
-    TeamService.teamsData = teams.data;
-    $scope.view.teams = TeamService.teamsData;
+    $scope.view.teams = teams.data;
 
     $scope.cityTeamMap = {"Redskins":"Washington ", "Eagles":"Philadelphia ", "Giants":"New York ", "Cowboys":"Dallas ",
         "Vikings":"Minnesota ", "Packers":"Green Bay ", "Lions":"Detroit ", "Bears":"Chicago ",
@@ -108,23 +89,6 @@ app.controller("TeamsController", function($scope, TeamService, teams) {
         "Bengals":"Cincinnati ", "Steelers":"Pittsburgh ", "Ravens":"Baltimore ", "Browns":"Cleveland ",
         "Texans":"Houston ", "Colts":"Indianapolis ", "Jaguars":"Jacksonville ", "Titans":"Tennessee ",
         "Broncos":"Denver ", "Chiefs":"Kansas City ", "Raiders":"Oakland ", "Chargers":"San Diego "};
-
-    // convert numbers from string to int type
-    for (let i = 0; i < teams.data.length; i++) {
-        teams.data[i].wins = parseInt(teams.data[i].record.split('-')[0]);
-        teams.data[i].losses = parseInt(teams.data[i].record.split('-')[1]);
-        teams.data[i].points = parseInt(teams.data[i].points);
-        teams.data[i].total_yards = parseInt(teams.data[i].total_yards);
-        teams.data[i].attempts = parseInt(teams.data[i].attempts);
-        teams.data[i].completions = parseInt(teams.data[i].completions);
-        teams.data[i].pass_yards = parseInt(teams.data[i].pass_yards);
-        teams.data[i].pass_tds = parseInt(teams.data[i].pass_tds);
-        teams.data[i].interceptions = parseInt(teams.data[i].interceptions);
-        teams.data[i].carries = parseInt(teams.data[i].carries);
-        teams.data[i].rush_tds = parseInt(teams.data[i].rush_tds);
-        teams.data[i].rush_yards = parseInt(teams.data[i].rush_yards);
-        teams.data[i].turnovers = parseInt(teams.data[i].turnovers);
-    }
 
     // Chart.js data must be nested array i.e. [[1,2,3,4,5]]
     var chartData = [];
@@ -163,5 +127,14 @@ app.controller("TeamsController", function($scope, TeamService, teams) {
             fontSize: '70px'
         }
     };
+});
 
+app.controller("PlayersIndividualController", function($scope, playersIndividual, ScoreService, $stateParams) {
+    $scope.view = {};
+    $scope.clicky = function () {
+        console.log($scope.view.players);
+    };
+
+    $scope.view.players = playersIndividual.data;
+    console.log($scope.view.players, 'indie controller')
 });

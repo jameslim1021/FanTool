@@ -14,7 +14,7 @@ app.controller("PlayersAllController", function($scope, playersAll, ScoreService
     $scope.clicky = function () {
         console.log($scope.view.players);
     };
-
+    console.log($scope.view.players, 'all player controller')
     $scope.view.players = playersAll.data;
 
     $scope.view.settings = ScoreService.settings;
@@ -39,7 +39,7 @@ app.controller("PlayersAllController", function($scope, playersAll, ScoreService
     $scope.view.playerNames = [];
     $scope.view.label = '';
     $scope.datasetOverride = [];
-    $scope.changeChartData = function (dataType, sortDir) {
+    $scope.changeChartData = function (dataType, sortDir, nameFilter, teamFilter, posFilter) {
         // clear arrays to redraw chart
         $scope.datasetOverride = [];
         $scope.view.playerNames = [];
@@ -52,8 +52,26 @@ app.controller("PlayersAllController", function($scope, playersAll, ScoreService
         }
         // push data into array and names sorted according to data
         for (let i = 0; i < $scope.view.players.length; i++) {
-            chartData.push(parseInt($scope.view.players[i][dataType]));
-            $scope.view.playerNames.push($scope.view.players[i].name);
+            if (teamFilter) {
+                console.log(teamFilter)
+                if ($scope.view.players[i].team.toLowerCase().includes(teamFilter)) {
+                    chartData.push(parseInt($scope.view.players[i][dataType]));
+                    $scope.view.playerNames.push($scope.view.players[i].name);
+                }
+            } else if (posFilter) {
+                if ($scope.view.players[i].position.toLowerCase().includes(posFilter)) {
+                    chartData.push(parseInt($scope.view.players[i][dataType]));
+                    $scope.view.playerNames.push($scope.view.players[i].name);
+                }
+            } else if (nameFilter) {
+                if ($scope.view.players[i].name.toLowerCase().includes(nameFilter)) {
+                    chartData.push(parseInt($scope.view.players[i][dataType]));
+                    $scope.view.playerNames.push($scope.view.players[i].name);
+                }
+            } else {
+                chartData.push(parseInt($scope.view.players[i][dataType]));
+                $scope.view.playerNames.push($scope.view.players[i].name);
+            }
         }
         $scope.data = [chartData];
         $scope.view.label = dataType.replace(/[^a-z0-9]/ig, " ");

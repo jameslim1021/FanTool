@@ -72,7 +72,7 @@ header img {
     float: left;
 }
 
-input[type=text] {
+.score-wrapper input[type=text] {
     border: 0.1em solid hsla(1, 0%, 65%, 1);
     width: 1.6em;
     height: 1.2em;
@@ -92,11 +92,11 @@ input[type=text] {
 }
 
 .team-table {
-    /*display: block;*/
-    height: 500px;
+    display: block;
+    height: 600px;
+    max-width: 910px;
     margin: 0 auto;
-    /*overflow-y: scroll;*/
-    overflow-x: scroll;
+    overflow: auto;
 }
 
 .team-table a, th {
@@ -116,12 +116,17 @@ input[type=text] {
 }*/
 
 .players-table {
-    /*display: block;*/
-    height: 500px;
+    display: block;
+    height: 600px;
+    max-width: 1027px;
     margin: 0 auto;
-    /*overflow-y: scroll;*/
-    overflow-x: scroll;
+    overflow: auto;
 }
+
+.players-table thead, tbody {
+    width: 100%;
+}
+
 .players-table a, th {
     font-size: 1.1em;
     font-family: 'Exo', sans-serif;

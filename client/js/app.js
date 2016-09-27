@@ -84,8 +84,19 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                 }
             }
         })
-        .state('players.year.id', {
-            url:'/:id',
+        .state('player', {
+            url:'/player',
+            views: {
+                'header': {
+                    templateUrl: '../templates/header.html'
+                },
+                'mainContent': {
+                    templateUrl: '../templates/players-main.html',
+                }
+            }
+        })
+        .state('player.name', {
+            url:'/:name',
             views: {
                 'header': {
                     templateUrl: '../templates/header.html'
@@ -95,7 +106,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                     controller: 'PlayersIndividualController',
                     resolve: {
                         playersIndividual: ['$stateParams', 'PlayerService', function($stateParams, PlayerService) {
-                            return PlayerService.showIndividualPlayer('/api/players/' + $stateParams.year + '/' + $stateParams.id);
+                            return PlayerService.showIndividualPlayer('/api/players/2015' + '/' + $stateParams.name);
                         }]
                     }
                 }

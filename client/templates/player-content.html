@@ -1,7 +1,7 @@
 <p class="table-nav">
     <a ui-sref="players.year({year: '2016'})">2016 /</a>
     <a ui-sref="players.year({year: '2015'})">2015 /</a>
-    <a ui-sref="players.year({year: '2014'})">2014 /</a>
+    <a ui-sref="players.year({year: '2014'})">2014</a>
 </p>
 <p><span ng-click="clicky()"><</span> Page <span>></span></p>
 <label>Search by name: <input type="text" ng-model="view.searchByName"></label>
@@ -16,7 +16,7 @@
     <option value="te">TE</option>
 </select>
 </label>
-<table class="players-table">
+<table class="players-table pure-table-horizontal">
     <thead>
         <tr>
             <th class="header-column">Name</th>
@@ -40,7 +40,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ft-player-info ng-repeat="player in view.players | filter:{name:view.searchByName, position:view.searchByPosition, team:view.searchByTeam} | orderBy:sortType:sortReverse | limitTo:limitNum"></tr>
+        <tr ft-player-totals ng-repeat="player in view.players | filter:{name:view.searchByName, position:view.searchByPosition, team:view.searchByTeam} | orderBy:sortType:sortReverse | limitTo:limitNum"></tr>
     </tbody>
 </table>
 <canvas id="line" class="chart chart-bar" chart-data="data"

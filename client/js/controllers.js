@@ -113,7 +113,7 @@ app.controller("TeamsController", function($scope, teams) {
     $scope.view.teamNames = [];
     $scope.view.label = '';
     $scope.datasetOverride = [];
-    $scope.changeChartData = function (dataType, sortDir) {
+    $scope.changeChartData = function (dataType='points', sortDir) {
         // clear arrays to redraw chart
         $scope.datasetOverride = [];
         $scope.view.teamNames = [];
@@ -150,9 +150,83 @@ app.controller("TeamsController", function($scope, teams) {
 app.controller("PlayersIndividualController", function($scope, playersIndividual, ScoreService, $stateParams) {
     $scope.view = {};
     $scope.clicky = function () {
-        console.log($scope.view.players);
+        console.log($scope.view.playerLog);
     };
 
-    $scope.view.players = playersIndividual.data;
-    console.log($scope.view.players, 'indie controller')
+    $scope.view.settings = ScoreService.settings;
+
+    $scope.view.playerInfo = playersIndividual.data.playerInfo[0];
+
+    // remove duplicates
+    var seenWeeks = [];
+    $scope.view.playerLog = []
+    for (let i = 0; i < playersIndividual.data.playerLog.length; i++) {
+        if (seenWeeks.indexOf(parseInt(playersIndividual.data.playerLog[i].week)) < 0) {
+            $scope.view.playerLog.push(playersIndividual.data.playerLog[i]);
+            seenWeeks.push(parseInt(playersIndividual.data.playerLog[i].week));
+        }
+    }
+
+    function calculateFantasyPoints(player) {
+        var fantasyPoints = 0;
+        fantasyPoints += parseInt($scope.view.settings.passTD) * parseInt(player.pass_tds);
+        fantasyPoints -= parseInt($scope.view.settings.int) * parseInt(player.interceptions);
+        fantasyPoints += parseInt(player.pass_yards) / parseInt($scope.view.settings.passYD);
+        fantasyPoints += parseInt($scope.view.settings.rushTD) * parseInt(player.rush_tds);
+        fantasyPoints += parseInt(player.rush_yards) / parseInt($scope.view.settings.rushYD);
+        fantasyPoints += parseInt($scope.view.settings.recTD) * parseInt(player.rec_tds);
+        fantasyPoints += parseInt($scope.view.settings.rec) * parseInt(player.receptions);
+        fantasyPoints += parseInt(player.rec_yards) / parseInt($scope.view.settings.recYD);
+        return fantasyPoints;
+    }
+
+    for (let i = 0; i < $scope.view.playerLog.length; i++) {
+        $scope.view.playerLog[i].fantasy = calculateFantasyPoints($scope.view.playerLog[i]);
+    }
+
+    // Chart.js data must be nested array i.e. [[1,2,3,4,5]]
+    var chartData = [];
+    $scope.view.teamNames = [];
+    $scope.view.label = '';
+    $scope.datasetOverride = [];
+    $scope.changeChartData = function (dataType, sortDir) {
+        // clear arrays to redraw chart
+        $scope.datasetOverride = [];
+        $scope.view.weeks = [];
+        chartData = [];
+        // sort data based on what column was clicked
+        // if (sortDir) {
+        //     $scope.view.playerLog.sort((a,b)=>{return a[dataType]-b[dataType];});
+        // } else {
+        //     $scope.view.playerLog.sort((a,b)=>{return b[dataType]-a[dataType];});
+        // }
+        // push data into array and names sorted according to data
+        for (let i = 0; i < $scope.view.playerLog.length; i++) {
+            chartData.push(parseInt($scope.view.playerLog[i][dataType]));
+            $scope.view.weeks.push(`Wk: ${$scope.view.playerLog[i].week} - ${$scope.view.playerLog[i].opponent}`);
+        }
+        $scope.data = [chartData];
+        $scope.view.label = dataType.replace(/[^a-z0-9]/ig, " ");
+        $scope.view.label = $scope.view.label.charAt(0).toUpperCase() + $scope.view.label.slice(1);
+        $scope.datasetOverride.push({
+                    label: $scope.view.label,
+                    borderWidth: 3.5,
+                    type: 'line',
+                    backgroundColor: "hsla(160, 50%, 50%, 0.3)",
+                    strokeColor: "black",
+                    hoverBorderColor: "hsla(280, 100%, 30%, 0.7)",
+                    defaultFontSize: '70px'
+                });
+        $scope.options = {
+            responsive: false,
+            scaleBeginAtZero : true,
+            scaleShowGridLines : true,
+            scaleGridLineColor : "rgba(0,0,0,.05)",
+            scaleGridLineWidth : 1,
+            barShowStroke : true,
+            barStrokeWidth : 2,
+            barValueSpacing : 5,
+            barDatasetSpacing : 1
+        }
+    };
 });

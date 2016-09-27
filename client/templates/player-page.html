@@ -1,1 +1,40 @@
-<p>HELLO WORLD</p>
+<p class="table-nav">
+    <a>2016 /</a>
+    <a>2015 /</a>
+    <a ng-click="clicky()">2014</a>
+</p>
+<p><span ng-click="clicky()"><</span> Page <span>></span></p>
+<canvas id="line" height="600" width="600" class="chart chart-line" chart-data="data"
+chart-labels="view.weeks" chart-dataset-override="datasetOverride" chart-options="options">
+</canvas>
+<table class="players-log-table pure-table-horizontal">
+    <thead>
+        <tr>
+            <th class="data-column" ng-click="sortType = 'week'; changeChartData(sortType, sortReverse)">Wk</th>
+            <th class="data-column">Opp</th>
+            <th class="data-column"></th>
+            <th class="data-column" ng-click="sortType = 'attempts'; changeChartData(sortType, sortReverse)">Att</th>
+            <th class="data-column" ng-click="sortType = 'completions'; changeChartData(sortType, sortReverse)">Cmp</th>
+            <th class="data-column" ng-click="sortType = 'pass_yards'; changeChartData(sortType, sortReverse)">Pass Yards</th>
+            <th class="data-column" ng-click="sortType = 'pass_tds'; changeChartData(sortType, sortReverse)">Pass TDs</th>
+            <th class="data-column" ng-click="sortType = 'interceptions'; changeChartData(sortType, sortReverse)">Int</th>
+            <th class="data-column" ng-click="sortType = 'pass_long'; changeChartData(sortType, sortReverse)">Pass Long</th>
+            <th class="data-column" ng-click="sortType = 'times_sacked'; changeChartData(sortType, sortReverse)">Sack</th>
+            <th class="data-column" ng-click="sortType = 'targets'; changeChartData(sortType, sortReverse)">Tgt</th>
+            <th class="data-column" ng-click="sortType = 'receptions'; changeChartData(sortType, sortReverse)">Rec</th>
+            <th class="data-column" ng-click="sortType = 'rec_yards'; changeChartData(sortType, sortReverse)">Rec Yards</th>
+            <th class="data-column" ng-click="sortType = 'rec_tds'; changeChartData(sortType, sortReverse)">Rec TDs</th>
+            <th class="data-column" ng-click="sortType = 'rec_long'; changeChartData(sortType, sortReverse)">Rec Long</th>
+            <th class="data-column" ng-click="sortType = 'carries'; changeChartData(sortType, sortReverse)">Att</th>
+            <th class="data-column" ng-click="sortType = 'rush_yards'; changeChartData(sortType, sortReverse)">Rush Yards</th>
+            <th class="data-column" ng-click="sortType = 'rush_tds'; changeChartData(sortType, sortReverse)">Rush TDs</th>
+            <th class="data-column" ng-click="sortType = 'rush_long'; changeChartData(sortType, sortReverse)">Rush Long</th>
+            <th class="data-column" ng-click="sortType = 'fumbles'; changeChartData(sortType, sortReverse)">Fmbl</th>
+            <th class="data-column" ng-click="sortType = 'fumbles_lost'; changeChartData(sortType, sortReverse)">Fmbl Lost</th>
+            <th class="data-column" ng-click="sortType = 'fantasy'; changeChartData(sortType, sortReverse)">Fntsy</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ft-player-logs ng-repeat="player in view.playerLog"></tr>
+    </tbody>
+</table>

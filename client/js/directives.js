@@ -3,8 +3,13 @@ app.directive("ftTeamInfo", function() {
         templateUrl: "../templates/team-info.html"
     };
 });
-app.directive("ftPlayerInfo", function() {
+app.directive("ftPlayerTotals", function() {
     return {
-        templateUrl: "../templates/player-info.html"
+        templateUrl: "../templates/player-totals.html"
+    };
+});
+app.directive("ftPlayerLogs", function() {
+    return {
+        templateUrl: "../templates/player-logs.html"
     };
 });

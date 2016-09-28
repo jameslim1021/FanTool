@@ -8,79 +8,84 @@
         <p><strong>Name: </strong>{{view.playerInfo.name}}</p>
         <p><strong>Age: </strong>{{view.playerInfo.age}}</p>
         <p><strong>Position: </strong>{{view.playerInfo.position}}</p>
-        <p><strong>Team: </strong>{{view.playerInfo.city}} {{view.playerInfo.team}}</p>
-        <label>
-        Select week range: Start
-        <select ng-model="weekStart" ng-selected="$first">
-            <option value="{{wkOption1}}" ng-repeat="wkOption1 in weekOptions">{{wkOption1}}</option>
-        </select>
-        End
-        <select ng-model="weekEnd" ng-selected="$last">
-            <option value="{{wkOption2}}" ng-repeat="wkOption2 in weekOptions">{{wkOption2}}</option>
-        </select>
+        <p><strong>Team: </strong><a ui-sref="team.name({name:view.playerInfo.team})">{{view.playerInfo.city}} {{view.playerInfo.team}}</a></p>
+    </div>
+    <div class="pure-u-md-1-2"></div>
+</div>
+<div class="pure-g">
+    <div class="pure-u-md-1-2">
+        <table class="players-log-total-table pure-table-horizontal">
+            <thead>
+                <tr>
+                    <th class="data-column"></th>
+                    <th class="data-column">Pass Yards</th>
+                    <th class="data-column">Pass TDs</th>
+                    <th class="data-column">Int</th>
+                    <th class="data-column">Rush Yards</th>
+                    <th class="data-column">Rush TDs</th>
+                    <th class="data-column">Rec</th>
+                    <th class="data-column">Rec Yards</th>
+                    <th class="data-column">Rec TDs</th>
+                    <th class="data-column">Fntsy</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th class="data-column">Scoring</th>
+                    <th class="data-column">{{view.settings.passYD | number:1}}</th>
+                    <th class="data-column">{{view.settings.passTD | number:1}}</th>
+                    <th class="data-column">{{view.settings.int | number:1}}</th>
+                    <th class="data-column">{{view.settings.rushYD | number:1}}</th>
+                    <th class="data-column">{{view.settings.rushTD | number:1}}</th>
+                    <th class="data-column">{{view.settings.rec | number:1}}</th>
+                    <th class="data-column">{{view.settings.recYD | number:1}}</th>
+                    <th class="data-column">{{view.settings.recTD | number:1}}</th>
+                    <th class="data-column"></th>
+                </tr>
+                <tr>
+                    <th class="data-column">NFL</th>
+                    <th class="data-column">{{view.displayTotal.pass_tds | number}}</th>
+                    <th class="data-column">{{view.displayTotal.interceptions | number}}</th>
+                    <th class="data-column">{{view.displayTotal.pass_yards | number}}</th>
+                    <th class="data-column">{{view.displayTotal.rush_yards | number}}</th>
+                    <th class="data-column">{{view.displayTotal.rush_tds | number}}</th>
+                    <th class="data-column">{{view.displayTotal.receptions | number}}</th>
+                    <th class="data-column">{{view.displayTotal.rec_yards | number}}</th>
+                    <th class="data-column">{{view.displayTotal.rec_tds | number}}</th>
+                    <th class="data-column"></th>
+                </tr>
+                <tr>
+                    <th class="data-column">Fantasy</th>
+                    <th class="data-column">{{view.displayFantasy.pass_tds | number:2}}</th>
+                    <th class="data-column">{{view.displayFantasy.interceptions | number:2}}</th>
+                    <th class="data-column">{{view.displayFantasy.pass_yards | number:2}}</th>
+                    <th class="data-column">{{view.displayFantasy.rush_yards | number:2}}</th>
+                    <th class="data-column">{{view.displayFantasy.rush_tds | number:2}}</th>
+                    <th class="data-column">{{view.displayFantasy.receptions | number:2}}</th>
+                    <th class="data-column">{{view.displayFantasy.rec_yards | number:2}}</th>
+                    <th class="data-column">{{view.displayFantasy.rec_tds | number:2}}</th>
+                    <th class="data-column">{{view.displayFantasy.total | number:2}}</th>
+                </tr>
+            </tbody>
+        </table>
+        <label class="players-log-header">
+            Select week range: Start
+            <select ng-model="weekStart" ng-selected="$first">
+                <option value="{{wkOption1}}" ng-repeat="wkOption1 in weekOptions">{{wkOption1}}</option>
+            </select>
+            End
+            <select ng-model="weekEnd" ng-selected="$last">
+                <option value="{{wkOption2}}" ng-repeat="wkOption2 in weekOptions">{{wkOption2}}</option>
+            </select>
             <button type="button" ng-click="changeTableWeeks(weekStart, weekEnd); changeChartData(sortType, sortReverse)">Submit</button>
         </label>
     </div>
     <div class="pure-u-md-1-2">
-        <canvas id="line" height="300" width="550" class="chart chart-line" chart-data="data"
+        <canvas id="line" height="200" width="500" class="chart chart-line" chart-data="data"
         chart-labels="view.weeks" chart-dataset-override="datasetOverride" chart-options="options">
         </canvas>
     </div>
 </div>
-<table class="players-log-total-table pure-table-horizontal">
-    <thead>
-        <tr>
-            <th class="data-column"></th>
-            <th class="data-column">Pass Yards</th>
-            <th class="data-column">Pass TDs</th>
-            <th class="data-column">Int</th>
-            <th class="data-column">Rush Yards</th>
-            <th class="data-column">Rush TDs</th>
-            <th class="data-column">Rec</th>
-            <th class="data-column">Rec Yards</th>
-            <th class="data-column">Rec TDs</th>
-            <th class="data-column">Fntsy</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th class="data-column">Scoring</th>
-            <th class="data-column">{{view.settings.passYD | number:1}}</th>
-            <th class="data-column">{{view.settings.passTD | number:1}}</th>
-            <th class="data-column">{{view.settings.int | number:1}}</th>
-            <th class="data-column">{{view.settings.rushYD | number:1}}</th>
-            <th class="data-column">{{view.settings.rushTD | number:1}}</th>
-            <th class="data-column">{{view.settings.rec | number:1}}</th>
-            <th class="data-column">{{view.settings.recYD | number:1}}</th>
-            <th class="data-column">{{view.settings.recTD | number:1}}</th>
-            <th class="data-column"></th>
-        </tr>
-        <tr>
-            <th class="data-column">NFL</th>
-            <th class="data-column">{{view.displayTotal.pass_tds | number}}</th>
-            <th class="data-column">{{view.displayTotal.interceptions | number}}</th>
-            <th class="data-column">{{view.displayTotal.pass_yards | number}}</th>
-            <th class="data-column">{{view.displayTotal.rush_yards | number}}</th>
-            <th class="data-column">{{view.displayTotal.rush_tds | number}}</th>
-            <th class="data-column">{{view.displayTotal.receptions | number}}</th>
-            <th class="data-column">{{view.displayTotal.rec_yards | number}}</th>
-            <th class="data-column">{{view.displayTotal.rec_tds | number}}</th>
-            <th class="data-column"></th>
-        </tr>
-        <tr>
-            <th class="data-column">Fantasy</th>
-            <th class="data-column">{{view.displayFantasy.pass_tds | number:2}}</th>
-            <th class="data-column">{{view.displayFantasy.interceptions | number:2}}</th>
-            <th class="data-column">{{view.displayFantasy.pass_yards | number:2}}</th>
-            <th class="data-column">{{view.displayFantasy.rush_yards | number:2}}</th>
-            <th class="data-column">{{view.displayFantasy.rush_tds | number:2}}</th>
-            <th class="data-column">{{view.displayFantasy.receptions | number:2}}</th>
-            <th class="data-column">{{view.displayFantasy.rec_yards | number:2}}</th>
-            <th class="data-column">{{view.displayFantasy.rec_tds | number:2}}</th>
-            <th class="data-column">{{view.displayFantasy.total | number:2}}</th>
-        </tr>
-    </tbody>
-</table>
 <table class="players-log-table pure-table-horizontal">
     <thead>
         <tr>

@@ -100,32 +100,41 @@ header img {
 }
 
 .team-table a, th {
-    font-size: 1.1em;
     font-family: 'Exo', sans-serif;
     letter-spacing: 0.075em;
 }
 
-.table-nav {
-
+.team-log-table {
+    display: block;
+    height: 700px;
+    max-width: 875px;
+    margin: 0 auto;
+    overflow: auto;
 }
-
-/*.teams-wrapper a, th {
-    font-size: 1.1em;
-    font-family: 'Exo', sans-serif;
-    letter-spacing: 0.075em;
-}*/
 
 .players-log-total-table {
     display: inline-block;
-    height: 210px;
+    height: 220px;
     margin-left: 37px;
     max-width: 700px;
     overflow: auto;
 }
 
+.team-log-total-table {
+    display: block;
+    height: 130px;
+    max-width: 800px;
+    margin: 0 auto;
+    overflow: auto;
+}
+
+.team-log-chart {
+    margin: 0 auto;
+}
+
 .players-log-table {
     display: block;
-    height: 510px;
+    height: 550px;
     max-width: 1083px;
     margin: 0 auto;
     overflow: auto;
@@ -148,13 +157,13 @@ header img {
 }
 
 .players-table a, th {
-    font-size: 1.1em;
     font-family: 'Exo', sans-serif;
     letter-spacing: 0.075em;
 }
 
 table, th, td {
     /*border: 1px solid black;*/
+    font-family: 'Exo', sans-serif;
     border-collapse: collapse;
     vertical-align: top;
     text-align: right;
@@ -192,4 +201,8 @@ thead th {
 
 thead th:hover {
     cursor: pointer;
+}
+
+tr:nth-child(even) {
+    background: hsla(1, 0%, 70%, 0.8);
 }

@@ -1,6 +1,11 @@
-app.directive("ftTeamInfo", function() {
+app.directive("ftTeamTotals", function() {
     return {
-        templateUrl: "../templates/team-info.html"
+        templateUrl: "../templates/team-totals.html"
+    };
+});
+app.directive("ftTeamLogs", function() {
+    return {
+        templateUrl: "../templates/team-logs.html"
     };
 });
 app.directive("ftPlayerTotals", function() {

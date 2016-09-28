@@ -91,13 +91,13 @@ app.controller("PlayersAllController", function($scope, playersAll, ScoreService
     };
 });
 
-app.controller("TeamsController", function($scope, teams) {
+app.controller("TeamsAllController", function($scope, teamsAll) {
     $scope.view = {};
     $scope.clicky = function () {
-        console.log(teams.data);
+        console.log(teamsAll.data);
     };
 
-    $scope.view.teams = teams.data;
+    $scope.view.teams = teamsAll.data;
 
     $scope.cityTeamMap = {"Redskins":"Washington ", "Eagles":"Philadelphia ", "Giants":"New York ", "Cowboys":"Dallas ",
         "Vikings":"Minnesota ", "Packers":"Green Bay ", "Lions":"Detroit ", "Bears":"Chicago ",
@@ -120,14 +120,14 @@ app.controller("TeamsController", function($scope, teams) {
         chartData = [];
         // sort data based on what column was clicked
         if (sortDir) {
-            teams.data.sort((a,b)=>{return a[dataType]-b[dataType];});
+            $scope.view.teams.sort((a,b)=>{return a[dataType]-b[dataType];});
         } else {
-            teams.data.sort((a,b)=>{return b[dataType]-a[dataType];});
+            $scope.view.teams.sort((a,b)=>{return b[dataType]-a[dataType];});
         }
         // push data into array and names sorted according to data
-        for (let i = 0; i < teams.data.length; i++) {
-            chartData.push(parseInt(teams.data[i][dataType]));
-            $scope.view.teamNames.push(teams.data[i].team);
+        for (let i = 0; i < $scope.view.teams.length; i++) {
+            chartData.push(parseInt($scope.view.teams[i][dataType]));
+            $scope.view.teamNames.push($scope.view.teams[i].team);
         }
         $scope.data = [chartData];
         $scope.view.label = dataType.replace(/[^a-z0-9]/ig, " ");
@@ -167,8 +167,8 @@ app.controller("PlayersIndividualController", function($scope, playersIndividual
     function calculateFantasyPoints(player) {
         var fantasyPoints = 0;
         fantasyPoints += parseInt($scope.view.settings.passTD) * parseInt(player.pass_tds);
-        fantasyPoints -= parseInt($scope.view.settings.int) * parseInt(player.interceptions)
-        fantasyPoints += parseInt($scope.view.settings.passYD) * parseInt(player.pass_yards)
+        fantasyPoints -= parseInt($scope.view.settings.int) * parseInt(player.interceptions);
+        fantasyPoints += parseInt($scope.view.settings.passYD) * parseInt(player.pass_yards);
         fantasyPoints += parseInt($scope.view.settings.rushTD) * parseInt(player.rush_tds);
         fantasyPoints += parseInt(player.rush_yards) / parseInt($scope.view.settings.rushYD);
         fantasyPoints += parseInt($scope.view.settings.recTD) * parseInt(player.rec_tds);
@@ -194,8 +194,8 @@ app.controller("PlayersIndividualController", function($scope, playersIndividual
             $scope.view.displayTotal.receptions += parseInt(arr[i].receptions);
             $scope.view.displayTotal.rec_yards += parseInt(arr[i].rec_yards);
             $scope.view.displayFantasy.pass_tds += parseInt($scope.view.settings.passTD) * parseInt(arr[i].pass_tds);
-            $scope.view.displayFantasy.interceptions += parseInt($scope.view.settings.int) * parseInt(arr[i].interceptions);
-            $scope.view.displayFantasy.pass_yards += parseInt($scope.view.settings.passYD) * parseInt(arr[i].pass_yards);
+            $scope.view.displayFantasy.interceptions -= parseInt($scope.view.settings.int) * parseInt(arr[i].interceptions);
+            $scope.view.displayFantasy.pass_yards += parseInt(arr[i].pass_yards) / parseInt($scope.view.settings.passYD);
             $scope.view.displayFantasy.rush_tds += parseInt($scope.view.settings.rushTD) * parseInt(arr[i].rush_tds);
             $scope.view.displayFantasy.rush_yards += parseInt(arr[i].rush_yards) / parseInt($scope.view.settings.rushYD);
             $scope.view.displayFantasy.rec_tds += parseInt($scope.view.settings.recTD) * parseInt(arr[i].rec_tds);
@@ -203,7 +203,7 @@ app.controller("PlayersIndividualController", function($scope, playersIndividual
             $scope.view.displayFantasy.rec_yards += parseInt(arr[i].rec_yards) / parseInt($scope.view.settings.recYD);
         }
         for (var key in $scope.view.displayFantasy) {
-            if (key !== 'total'){    
+            if (key !== 'total'){
                 $scope.view.displayFantasy.total += $scope.view.displayFantasy[key];
             }
         }
@@ -211,17 +211,15 @@ app.controller("PlayersIndividualController", function($scope, playersIndividual
 
     $scope.view.displayPlayer = playerArray;
 
-    $scope.weekOptions = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
-    $scope.changeTableWeeks = function (start, end) {
-        console.log($scope.view.displayPlayer, 'display player');
+    $scope.weekOptions = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
+    $scope.changeTableWeeks = function (start=1, end=17) {
         $scope.view.displayPlayer = [];
         var endRange = (end > playerArray.length) ? playerArray.length : end;
         for (let i = start-1; i < endRange; i++) {
             $scope.view.displayPlayer.push(playerArray[i]);
         }
         calculateTotals($scope.view.displayPlayer);
-        console.log($scope.view.displayTotal, 'display total')
-    }
+    };
 
     // Chart.js data must be nested array i.e. [[1,2,3,4,5]]
     var chartData = [];
@@ -243,6 +241,89 @@ app.controller("PlayersIndividualController", function($scope, playersIndividual
         for (let i = 0; i < $scope.view.displayPlayer.length; i++) {
             chartData.push(parseInt($scope.view.displayPlayer[i][dataType]));
             $scope.view.weeks.push(`Wk: ${$scope.view.displayPlayer[i].week - 1} - ${$scope.view.displayPlayer[i].opponent}`);
+        }
+        $scope.data = [chartData];
+        $scope.view.label = dataType.replace(/[^a-z0-9]/ig, " ");
+        $scope.view.label = $scope.view.label.charAt(0).toUpperCase() + $scope.view.label.slice(1);
+        $scope.datasetOverride.push({
+                    label: $scope.view.label,
+                    borderWidth: 3.5,
+                    type: 'line',
+                    backgroundColor: "hsla(160, 50%, 50%, 0.3)",
+                    strokeColor: "black",
+                    hoverBorderColor: "hsla(280, 100%, 30%, 0.7)",
+                    defaultFontSize: '70px'
+                });
+        $scope.options = {
+            responsive: false,
+            scaleBeginAtZero : true,
+            scaleShowGridLines : true,
+            scaleGridLineColor : "rgba(0,0,0,.05)",
+            scaleGridLineWidth : 1,
+            barShowStroke : true,
+            barStrokeWidth : 2,
+            barValueSpacing : 5,
+            barDatasetSpacing : 1
+        }
+    };
+});
+
+app.controller("TeamsIndividualController", function($scope, teamsIndividual, TeamService, ScoreService, $stateParams) {
+    $scope.view = {};
+    $scope.clicky = function () {
+        console.log($scope.view.displayLogs);
+    };
+
+    $scope.view.settings = ScoreService.settings;
+
+    // remove duplicates
+    // var seenGames = {};
+    // var dataArray = [];
+    // for (let i = 0; i < teamsIndividual.data.playerLogs.length; i++) {
+    //
+    //     if (seenGames[teamsIndividual.data.playerLogs[i].game_id] !== teamsIndividual.data.playerLogs[i].player_team_id) {
+    //         console.log('hello')
+    //         seenGames[teamsIndividual.data.playerLogs[i].game_id] = teamsIndividual.data.playerLogs[i].player_team_id
+    //         dataArray.push(teamsIndividual.data.playerLogs[i]);
+    //     }
+    // }
+
+    $scope.view.displayLogs = teamsIndividual.data.gameLog;
+    // convert numbers from string to int type
+    for (let i = 0; i < $scope.view.displayLogs.length; i++) {
+        $scope.view.displayLogs[i].week = parseInt($scope.view.displayLogs[i].week);
+        $scope.view.displayLogs[i].points_for = parseInt($scope.view.displayLogs[i].points_for);
+        $scope.view.displayLogs[i].points_against = parseInt($scope.view.displayLogs[i].points_against);
+        $scope.view.displayLogs[i].total_yards_for = parseInt($scope.view.displayLogs[i].total_yards_for);
+        $scope.view.displayLogs[i].pass_yards_for = parseInt($scope.view.displayLogs[i].pass_yards_for);
+        $scope.view.displayLogs[i].rush_yards_for = parseInt($scope.view.displayLogs[i].rush_yards_for);
+        $scope.view.displayLogs[i].turnovers_forced = parseInt($scope.view.displayLogs[i].turnovers_forced);
+        $scope.view.displayLogs[i].total_yards_against = parseInt($scope.view.displayLogs[i].total_yards_against);
+        $scope.view.displayLogs[i].pass_yards_against = parseInt($scope.view.displayLogs[i].pass_yards_against);
+        $scope.view.displayLogs[i].rush_yards_against = parseInt($scope.view.displayLogs[i].rush_yards_against);
+        $scope.view.displayLogs[i].turnovers_lost = parseInt($scope.view.displayLogs[i].turnovers_lost);
+    }
+
+    // Chart.js data must be nested array i.e. [[1,2,3,4,5]]
+    var chartData = [];
+    $scope.view.teamNames = [];
+    $scope.view.label = '';
+    $scope.datasetOverride = [];
+    $scope.changeChartData = function (dataType, sortDir, start, end) {
+        // clear arrays to redraw chart
+        $scope.datasetOverride = [];
+        $scope.view.weeks = [];
+        chartData = [];
+        // sort data based on what column was clicked
+        if (sortDir) {
+            $scope.view.displayLogs.sort((a,b)=>{return a[dataType]-b[dataType];});
+        } else {
+            $scope.view.displayLogs.sort((a,b)=>{return b[dataType]-a[dataType];});
+        }
+        // push data into array and names sorted according to data
+        for (let i = 0; i < $scope.view.displayLogs.length; i++) {
+            chartData.push(parseInt($scope.view.displayLogs[i][dataType]));
+            $scope.view.weeks.push(`Wk: ${$scope.view.displayLogs[i].week - 1} - ${$scope.view.displayLogs[i].opponent}`);
         }
         $scope.data = [chartData];
         $scope.view.label = dataType.replace(/[^a-z0-9]/ig, " ");

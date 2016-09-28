@@ -14,7 +14,7 @@ app.service("ScoreService", function() {
 });
 
 app.service("TeamService", function($http) {
-    this.showTeams = function(query){
+    this.showAllTeams = function(query){
         this.teamsData = $http.get(query).then(function(teams) {
             // convert numbers from string to int type
             for (let i = 0; i < teams.data.length; i++) {
@@ -32,6 +32,14 @@ app.service("TeamService", function($http) {
                 teams.data[i].rush_yards = parseInt(teams.data[i].rush_yards);
                 teams.data[i].turnovers = parseInt(teams.data[i].turnovers);
             }
+            return teams;
+        }).catch(function(err) {
+            console.log(err);
+        });
+        return this.teamsData;
+    };
+    this.showIndividualTeam = function(query){
+        this.teamsData = $http.get(query).then(function(teams) {
             return teams;
         }).catch(function(err) {
             console.log(err);

@@ -25,27 +25,33 @@ router.get('/:year', function(req, res, next) {
 	.where('games.week',17)
 	.where('games.season', parseInt(req.params.year))
 	.then(function(result) {
-		console.log('/teams/:year')
 		res.send(result);
 	});
 });
 
-// router.post('/', function(req, res, next) {
-// 	knex('teams').insert(req.body).then(function(insert) {
-// 		knex.select().table('teams').then(function(teams) {
-// 			res.json(teams);
-// 		});
-// 	});
-// });
-//
-// router.put("/:id", function(req, res, next) {
-// 	knex('teams').update(req.body).where({"id" : req.params.id}).then(function(insert) {
-// 		knex.select().table('teams').then(function(teams) {
-// 			res.json(teams);
-// 		});
-// 	});
-// }).delete(function(req, res, next) {
-// 	knex('teams').where({"id":req.params.id}).del();
-// });
+router.get('/:year/:name', function(req, res, next) {
+	knex('teams')
+	.select('teams.name as team', 'teams.city as city', 'games.*', 'o.name as opponent', 'teams_totals.*')
+	.join('games', 'games.team_id', 'teams.id')
+	.join('teams_totals', 'teams_totals.team_id', 'teams.id')
+	.join('teams as o', 'o.id', 'games.opponent_id')
+	.where('games.season', parseInt(req.params.year))
+	.where('teams_totals.season', parseInt(req.params.year))
+	.where('teams.name', req.params.name)
+	.then(function(gameLog) {
+		knex('players_teams')
+		.select('players_games.*', 'players.name as name', 'players.position as position', 'games.week as week')
+		.join('players_games', 'players_games.players_team_id', 'players_teams.id')
+		.join('players', 'players_teams.player_id', 'players.id')
+		.join('games', 'players_games.game_id', 'games.id')
+		.where('players_teams.team_id', gameLog[0].team_id)
+		.where('players_teams.season', req.params.year)
+		.then(function(playerLogs) {
+			var temp = {"gameLog":gameLog, "playerLogs":playerLogs};
+			console.log(playerLogs);
+			res.json(temp);
+		});
+	});
+});
 
 module.exports = router;

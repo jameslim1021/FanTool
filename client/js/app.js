@@ -46,11 +46,39 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                 },
                 'teamContent': {
                     templateUrl: '../templates/teams-content.html',
-                    controller: 'TeamsController',
+                    controller: 'TeamsAllController',
                     resolve: {
-                        teams: ['$stateParams', 'TeamService', function($stateParams, TeamService) {
+                        teamsAll: ['$stateParams', 'TeamService', function($stateParams, TeamService) {
+                            return TeamService.showAllTeams('/api/teams/' + $stateParams.year);
+                        }]
+                    }
+                }
+            }
+        })
+        .state('team', {
+            url:'/team',
+            views: {
+                'header': {
+                    templateUrl: '../templates/header.html'
+                },
+                'mainContent': {
+                    templateUrl: '../templates/teams-main.html',
+                }
+            }
+        })
+        .state('team.name', {
+            url:'/:name',
+            views: {
+                'header': {
+                    templateUrl: '../templates/header.html'
+                },
+                'teamContent': {
+                    templateUrl: '../templates/team-page.html',
+                    controller: 'TeamsIndividualController',
+                    resolve: {
+                        teamsIndividual: ['$stateParams', 'TeamService', function($stateParams, TeamService) {
                             console.log($stateParams.year)
-                            return TeamService.showTeams('/api/teams/' + $stateParams.year);
+                            return TeamService.showIndividualTeam('/api/teams/2015/' + $stateParams.name);
                         }]
                     }
                 }
@@ -112,20 +140,20 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                 }
             }
         })
-        .state('player.name.year', {
-            url:'/:year',
-            views: {
-                'header': {
-                    templateUrl: '../templates/header.html'
-                },
-                'playerContent': {
-                    templateUrl: '../templates/player-page.html',
-                    resolve: {
-                        playersIndividual: ['$stateParams', 'PlayerService', function($stateParams, PlayerService) {
-                            return PlayerService.showIndividualPlayer('/api/players/' + $stateParams.year + '/' + $stateParams.name);
-                        }]
-                    }
-                }
-            }
-        })
+        // .state('player.name.year', {
+        //     url:'/:year',
+        //     views: {
+        //         'header': {
+        //             templateUrl: '../templates/header.html'
+        //         },
+        //         'playerContent': {
+        //             templateUrl: '../templates/player-page.html',
+        //             resolve: {
+        //                 playersIndividual: ['$stateParams', 'PlayerService', function($stateParams, PlayerService) {
+        //                     return PlayerService.showIndividualPlayer('/api/players/' + $stateParams.year + '/' + $stateParams.name);
+        //                 }]
+        //             }
+        //         }
+        //     }
+        // })
 }]);

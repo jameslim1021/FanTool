@@ -23,7 +23,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ft-team-info team-result="team" ng-repeat="team in view.teams | orderBy:sortType:sortReverse"></tr>
+        <tr ft-team-totals team-result="team" ng-repeat="team in view.teams | orderBy:sortType:sortReverse"></tr>
     </tbody>
 </table>
 <canvas id="line" class="chart chart-bar" chart-data="data"

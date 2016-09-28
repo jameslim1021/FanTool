@@ -1,0 +1,75 @@
+<div class="pure-g">
+    <div class="pure-u-md-1-1">
+        <table class="team-log-total-table pure-table-horizontal">
+            <thead>
+                <tr>
+                    <th class="data-column" ng-click="sortType = 'points'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">City</th>
+                    <th class="data-column" ng-click="sortType = 'points'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Team</th>
+                    <th class="data-column" ng-click="sortType = 'points'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Season</th>
+                    <th class="data-column" ng-click="sortType = 'points'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Points</th>
+                    <th class="data-column" ng-click="sortType = 'total_yards'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Total YDs</th>
+                    <th class="data-column" ng-click="sortType = 'attempts'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Att</th>
+                    <th class="data-column" ng-click="sortType = 'completions'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Cmp</th>
+                    <th class="data-column" ng-click="sortType = 'pass_yards'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Pass YDs</th>
+                    <th class="data-column" ng-click="sortType = 'pass_tds'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Pass TDs</th>
+                    <th class="data-column" ng-click="sortType = 'interceptions'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Int</th>
+                    <th class="data-column" ng-click="sortType = 'carries'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Carries</th>
+                    <th class="data-column" ng-click="sortType = 'rush_tds'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Rush TDs</th>
+                    <th class="data-column" ng-click="sortType = 'rush_yards'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Rush Yards</th>
+                    <th class="data-column" ng-click="sortType = 'turnovers'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Turnovers</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <td><strong>{{view.displayLogs[0].city}}</strong></td>
+                    <td><strong>{{view.displayLogs[0].team}}</strong></td>
+                    <td>{{view.displayLogs[0].season}}</td>
+                    <td>{{view.displayLogs[0].points}}</td>
+                    <td>{{view.displayLogs[0].total_yards}}</td>
+                    <td>{{view.displayLogs[0].attempts}}</td>
+                    <td>{{view.displayLogs[0].completions}}</td>
+                    <td>{{view.displayLogs[0].pass_yards}}</td>
+                    <td>{{view.displayLogs[0].pass_tds}}</td>
+                    <td>{{view.displayLogs[0].interceptions}}</td>
+                    <td>{{view.displayLogs[0].carries}}</td>
+                    <td>{{view.displayLogs[0].rush_tds}}</td>
+                    <td>{{view.displayLogs[0].rush_yards}}</td>
+                    <td>{{view.displayLogs[0].turnovers}}</td>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="pure-g">
+    <div class="pure-u-md-1-1">
+        <canvas id="line" height="200" width="500" class="chart chart-line team-log-chart" chart-data="data"
+        chart-labels="view.weeks" chart-dataset-override="datasetOverride" chart-options="options">
+        </canvas>
+    </div>
+</div>
+<div class="pure-g">
+    <div class="pure-u-md-1-1">
+        <table class="team-log-table pure-table-horizontal">
+            <thead>
+                <tr>
+                    <th class="data-column" ng-click="sortType = 'week'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Wk</th>
+                    <th class="data-column" ng-click="clicky()">Opp</th>
+                    <th class="data-column"></th>
+                    <th class="data-column">Record</th>
+                    <th class="data-column">Result</th>
+                    <th class="data-column" ng-click="sortType = 'points_for'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Points For</th>
+                    <th class="data-column" ng-click="sortType = 'points_against'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Points VS</th>
+                    <th class="data-column" ng-click="sortType = 'total_yards_for'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">ToT Yards For</th>
+                    <th class="data-column" ng-click="sortType = 'pass_yards_for'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Pass Yards For</th>
+                    <th class="data-column" ng-click="sortType = 'rush_yards_for'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Rush Yards For</th>
+                    <th class="data-column" ng-click="sortType = 'turnovers_forced'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">TOs Frcd</th>
+                    <th class="data-column" ng-click="sortType = 'total_yards_against'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">ToT Yards VS</th>
+                    <th class="data-column" ng-click="sortType = 'pass_yards_against'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Pass Yards VS</th>
+                    <th class="data-column" ng-click="sortType = 'rush_yards_against'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Rush Yards VS</th>
+                    <th class="data-column" ng-click="sortType = 'turnovers_lost'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">TOs Lost</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ft-team-logs ng-repeat="team in view.displayLogs | orderBy:sortType:sortReverse"></tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -104,7 +104,7 @@ for team in game_log_2014:
 
         cur.execute("SELECT id from teams where name=%(name)s;",
         {'name': game_log_2014[team][week]["opponent"]})
-
+        print game_log_2014[team]
         opponent_id = cur.fetchall()[0]
 
         cur.execute("INSERT INTO GAMES (TEAM_ID, OPPONENT_ID, SEASON, WEEK, RESULT, RECORD, HOME, POINTS_FOR, POINTS_AGAINST, TOTAL_YARDS_FOR, PASS_YARDS_FOR, RUSH_YARDS_FOR, TURNOVERS_LOST, TOTAL_YARDS_AGAINST, PASS_YARDS_AGAINST, RUSH_YARDS_AGAINST, TURNOVERS_FORCED) \

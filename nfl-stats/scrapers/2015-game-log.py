@@ -33,7 +33,7 @@ def get_game_log(team_url):
     for record in table_stats.findAll('tr'):
         for data in record.findAll('td'):
             data_array.append(data.text)
-        if week < 18:
+        if week < 19:
             week_data[week] = data_array
             data_array = []
             week = week + 1

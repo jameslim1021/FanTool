@@ -1,10 +1,10 @@
 <div class="pure-g">
     <div class="pure-u-md-1-2 players-log-header">
-        <p class="table-nav">
+        <!-- <p class="table-nav">
             <a ui-sref="player.name({name:view.playerInfo.name})">2016 /</a>
             <a ui-sref="player.name({name:2015 + '/' + view.playerInfo.name})">2015 /</a>
             <a ui-sref="player.name({name:2014 + '/' + view.playerInfo.name})">2014 /</a>
-        </p>
+        </p> -->
         <p><strong>Name: </strong>{{view.playerInfo.name}}</p>
         <p><strong>Age: </strong>{{view.playerInfo.age}}</p>
         <p><strong>Position: </strong>{{view.playerInfo.position}}</p>
@@ -68,20 +68,22 @@
                 </tr>
             </tbody>
         </table>
-        <label class="players-log-header">
-            Select week range: Start
-            <select ng-model="weekStart" ng-selected="$first">
-                <option value="{{wkOption1}}" ng-repeat="wkOption1 in weekOptions">{{wkOption1}}</option>
-            </select>
-            End
-            <select ng-model="weekEnd" ng-selected="$last">
-                <option value="{{wkOption2}}" ng-repeat="wkOption2 in weekOptions">{{wkOption2}}</option>
-            </select>
-            <button type="button" ng-click="changeTableWeeks(weekStart, weekEnd); changeChartData(sortType, sortReverse)">Submit</button>
-        </label>
+        <form class="pure-form">
+            <label class="players-log-header">
+                Select week range: Start
+                <select ng-model="weekStart" ng-selected="weekOptions[0]">
+                    <option value="{{wkOption1}}" ng-repeat="wkOption1 in weekOptions">{{wkOption1}}</option>
+                </select>
+                End
+                <select ng-model="weekEnd" ng-selected="$last">
+                    <option value="{{wkOption2}}" ng-repeat="wkOption2 in weekOptions">{{wkOption2}}</option>
+                </select>
+                <button type="button" class="pure-button" ng-click="changeTableWeeks(weekStart, weekEnd); changeChartData(sortType, sortReverse)">Submit</button>
+            </label>
+        </form>
     </div>
     <div class="pure-u-md-1-2">
-        <canvas id="line" height="200" width="500" class="chart chart-line" chart-data="data"
+        <canvas id="bar" height="200" width="500" class="chart chart-bar" chart-data="data"
         chart-labels="view.weeks" chart-dataset-override="datasetOverride" chart-options="options">
         </canvas>
     </div>
@@ -114,6 +116,6 @@
         </tr>
     </thead>
     <tbody>
-        <tr ft-player-logs ng-repeat="player in view.displayPlayer track by $index"></tr>
+        <tr ft-player-logs ng-repeat="player in view.displayPlayer| orderBy:'week'"></tr>
     </tbody>
 </table>

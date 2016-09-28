@@ -7,9 +7,10 @@ header {
 
 body {
     font: 16px Helvetica, Arial, sans-serif;
-    background-color: hsla(160, 50%, 50%, 1);
+    background-color: hsla(160, 50%, 40%, 0.8);
     overflow: auto;
-    height: 100%
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
 }
 
 html {
@@ -74,17 +75,17 @@ header img {
 
 .score-wrapper input[type=text] {
     border: 0.1em solid hsla(1, 0%, 65%, 1);
-    width: 1.6em;
+    width: 2.6em;
     height: 1.2em;
-    maxlength: 2;
 }
 
-.score-wrapper, .teams-wrapper {
+.score-wrapper {
+    margin: 0 auto;
+    padding-left: 30px;
+}
+
+.teams-wrapper {
     padding: 0.8em;
-}
-
-.score-wrapper label {
-    margin-top: 0.5em;
 }
 
 .score-wrapper label {
@@ -102,6 +103,10 @@ header img {
 .team-table a, th {
     font-family: 'Exo', sans-serif;
     letter-spacing: 0.075em;
+}
+
+.team-table-header {
+    padding-left: 195px;
 }
 
 .team-log-table {
@@ -134,7 +139,7 @@ header img {
 
 .players-log-table {
     display: block;
-    height: 550px;
+    max-height: 600px;
     max-width: 1083px;
     margin: 0 auto;
     overflow: auto;
@@ -150,6 +155,10 @@ header img {
     max-width: 1027px;
     margin: 0 auto;
     overflow: auto;
+}
+
+.players-total-header {
+    padding-left: 137px;
 }
 
 .players-table thead, tbody {
@@ -187,7 +196,8 @@ table td {
 }
 
 .data-column {
-    width: 2.5em;
+    width: auto;
+    /*width: 2.5em;*/
 }
 
 tbody tr:hover {

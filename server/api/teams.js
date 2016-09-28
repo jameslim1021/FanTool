@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 	.join('teams_totals', 'teams_totals.team_id', 'teams.id')
 	.join('games', 'games.team_id', 'teams.id')
 	.where('teams_totals.season',2016)
-	.where('games.week',3)
+	.where('games.week',4)
 	.where('games.season',2016)
 	.then(function(result) {
 		console.log('/teams')
@@ -17,12 +17,13 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:year', function(req, res, next) {
+	var week = (parseInt(req.params.year) === 2016) ? 4 : 17;
 	knex('teams')
 	.select('teams.name as team', 'games.record as record', 'teams_totals.*')
 	.join('teams_totals', 'teams_totals.team_id', 'teams.id')
 	.join('games', 'games.team_id', 'teams.id')
 	.where('teams_totals.season', parseInt(req.params.year))
-	.where('games.week',17)
+	.where('games.week', week)
 	.where('games.season', parseInt(req.params.year))
 	.then(function(result) {
 		res.send(result);

@@ -31,7 +31,7 @@ app.controller("PlayersAllController", function($scope, playersAll, ScoreService
         fantasyPoints += parseInt(player.rec_yards) / parseInt($scope.view.settings.recYD);
         return fantasyPoints;
     }
-    for (let i = 0; i < $scope.view.players.length; i++) {
+    for (let i = 400; i < $scope.view.players.length; i++) {
         playersAll.data[i].fantasy = calculateFantasyPoints(playersAll.data[i]);
     }
 
@@ -248,7 +248,7 @@ app.controller("PlayersIndividualController", function($scope, playersIndividual
         $scope.datasetOverride.push({
                     label: $scope.view.label,
                     borderWidth: 3.5,
-                    type: 'line',
+                    type: 'bar',
                     backgroundColor: "hsla(160, 50%, 50%, 0.3)",
                     strokeColor: "black",
                     hoverBorderColor: "hsla(280, 100%, 30%, 0.7)",

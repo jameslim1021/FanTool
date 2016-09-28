@@ -79,26 +79,26 @@ app.service("PlayerService", function($http) {
     this.showIndividualPlayer = function(query){
         this.playerInfo = $http.get(query).then(function(players) {
             // convert numbers from string to int type
-            for (let i = 0; i < players.data.length; i++) {
-                players.data[i].week = parseInt(players.data[i].week);
-                players.data[i].attempts = parseInt(players.data[i].attempts);
-                players.data[i].completions = parseInt(players.data[i].completions);
-                players.data[i].pass_yards = parseInt(players.data[i].pass_yards);
-                players.data[i].pass_tds = parseInt(players.data[i].pass_tds);
-                players.data[i].interceptions = parseInt(players.data[i].interceptions);
-                players.data[i].pass_long = parseInt(players.data[i].pass_long);
-                players.data[i].times_sacked = parseInt(players.data[i].times_sacked);
-                players.data[i].targets = parseInt(players.data[i].targets);
-                players.data[i].receptions = parseInt(players.data[i].receptions);
-                players.data[i].rec_tds = parseInt(players.data[i].rec_tds);
-                players.data[i].rec_yards = parseInt(players.data[i].rec_yards);
-                players.data[i].rec_long = parseInt(players.data[i].rec_long);
-                players.data[i].carries = parseInt(players.data[i].carries);
-                players.data[i].rush_yards = parseInt(players.data[i].rush_yards);
-                players.data[i].rush_tds = parseInt(players.data[i].rush_tds);
-                players.data[i].rush_long = parseInt(players.data[i].rush_long);
-                players.data[i].fumbles = parseInt(players.data[i].fumbles);
-                players.data[i].fumbles_lost = parseInt(players.data[i].fumbles_lost);
+            for (let i = 0; i < players.data.playerLog.length; i++) {
+                players.data.playerLog[i].week = parseInt(players.data.playerLog[i].week);
+                players.data.playerLog[i].attempts = parseInt(players.data.playerLog[i].attempts);
+                players.data.playerLog[i].completions = parseInt(players.data.playerLog[i].completions);
+                players.data.playerLog[i].pass_yards = parseInt(players.data.playerLog[i].pass_yards);
+                players.data.playerLog[i].pass_tds = parseInt(players.data.playerLog[i].pass_tds);
+                players.data.playerLog[i].interceptions = parseInt(players.data.playerLog[i].interceptions);
+                players.data.playerLog[i].pass_long = parseInt(players.data.playerLog[i].pass_long);
+                players.data.playerLog[i].times_sacked = parseInt(players.data.playerLog[i].times_sacked);
+                players.data.playerLog[i].targets = parseInt(players.data.playerLog[i].targets);
+                players.data.playerLog[i].receptions = parseInt(players.data.playerLog[i].receptions);
+                players.data.playerLog[i].rec_tds = parseInt(players.data.playerLog[i].rec_tds);
+                players.data.playerLog[i].rec_yards = parseInt(players.data.playerLog[i].rec_yards);
+                players.data.playerLog[i].rec_long = parseInt(players.data.playerLog[i].rec_long);
+                players.data.playerLog[i].carries = parseInt(players.data.playerLog[i].carries);
+                players.data.playerLog[i].rush_yards = parseInt(players.data.playerLog[i].rush_yards);
+                players.data.playerLog[i].rush_tds = parseInt(players.data.playerLog[i].rush_tds);
+                players.data.playerLog[i].rush_long = parseInt(players.data.playerLog[i].rush_long);
+                players.data.playerLog[i].fumbles = parseInt(players.data.playerLog[i].fumbles);
+                players.data.playerLog[i].fumbles_lost = parseInt(players.data.playerLog[i].fumbles_lost);
             }
             return players;
         }).catch(function(err) {

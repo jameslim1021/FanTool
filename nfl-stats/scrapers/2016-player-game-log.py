@@ -230,7 +230,7 @@ for team in player_log:
                 player_id = player_result[0]
 
                 cur.execute("SELECT id from players_teams where player_id=%(player_id)s and team_id=%(team_id)s and season=%(season)s;",
-                    {'player_id':player_id, 'team_id':team_id, 'season', 2016})
+                    {'player_id':player_id, 'team_id':team_id, 'season': 2016})
 
                 players_teams_result = cur.fetchall()
 
@@ -246,7 +246,7 @@ for team in player_log:
                     players_team_id = players_teams_result[0]
 
                     cur.execute("SELECT id from games where team_id=%(team_id)s and week=%(week)s and season=%(season)s;",
-                        {'team_id':team_id, 'week':week, 'season', 2014})
+                        {'team_id':team_id, 'week':week, 'season': 2016})
 
                     game_id = cur.fetchall()[0]
 

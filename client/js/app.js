@@ -11,22 +11,23 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                     templateUrl: '../templates/header.html'
                 },
                 'mainContent': {
-                    templateUrl: '../templates/home-content.html'
-                }
-            }
-        })
-        .state('main', {
-            url:'/main',
-            views: {
-                'header': {
-                    templateUrl: '../templates/header.html'
-                },
-                'mainContent': {
                     templateUrl: '../templates/score-setting.html',
                     controller: 'ScoreController'
                 }
             }
         })
+        // .state('main', {
+        //     url:'/main',
+        //     views: {
+        //         'header': {
+        //             templateUrl: '../templates/header.html'
+        //         },
+        //         'mainContent': {
+        //             templateUrl: '../templates/score-setting.html',
+        //             controller: 'ScoreController'
+        //         }
+        //     }
+        // })
         .state('teams', {
             url:'/teams',
             views: {

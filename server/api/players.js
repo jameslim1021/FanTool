@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/:year', function(req, res, next) {
 	knex('players')
-	.select('players.name as name', 'players.position as position', 'teams.name as team', 'players_totals.*')
+	.select('players.name as name', 'players.position as position', 'teams.name as team', 'players_teams.season as season', 'players_totals.*')
 	.join('players_teams', 'players_teams.player_id', 'players.id')
 	.join('teams', 'players_teams.team_id', 'teams.id')
 	.join('players_totals', 'players_totals.players_team_id', 'players_teams.id')
@@ -28,7 +28,7 @@ router.get('/:year', function(req, res, next) {
 
 router.get('/:year/:name', function(req, res, next) {
 	knex('players')
-	.select('players.name as name', 'players.position as position', 'teams.name as team', 'teams.city as city', 'players.id as player_id', 'teams.id as team_id', 'players_teams.id as players_team_id')
+	.select('players.name as name', 'players.position as position', 'players.age as age', 'teams.name as team', 'teams.city as city', 'players.id as player_id', 'teams.id as team_id', 'players_teams.id as players_team_id')
 	.join('players_teams', 'players_teams.player_id', 'players.id')
 	.join('teams', 'players_teams.team_id', 'teams.id')
 	.where('players_teams.season', req.params.year)

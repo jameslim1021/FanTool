@@ -115,12 +115,24 @@ header img {
     letter-spacing: 0.075em;
 }*/
 
+.players-log-total-table {
+    display: inline-block;
+    height: 210px;
+    margin-left: 37px;
+    max-width: 700px;
+    overflow: auto;
+}
+
 .players-log-table {
     display: block;
     height: 510px;
     max-width: 1083px;
     margin: 0 auto;
     overflow: auto;
+}
+
+.players-log-header {
+    padding-left: 45px;
 }
 
 .players-table {
@@ -181,9 +193,3 @@ thead th {
 thead th:hover {
     cursor: pointer;
 }
-/*
-canvas {
-    margin-top: 30px;
-    width: 600px;
-    height: 600px;
-}*/

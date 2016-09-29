@@ -31,7 +31,7 @@ app.controller("PlayersAllController", function($scope, playersAll, ScoreService
         fantasyPoints += parseInt(player.rec_yards) / parseInt($scope.view.settings.recYD);
         return fantasyPoints;
     }
-    for (let i = 400; i < $scope.view.players.length; i++) {
+    for (let i = 0; i < $scope.view.players.length; i++) {
         playersAll.data[i].fantasy = calculateFantasyPoints(playersAll.data[i]);
     }
 
@@ -51,7 +51,7 @@ app.controller("PlayersAllController", function($scope, playersAll, ScoreService
             $scope.view.players.sort((a,b)=>{return b[dataType]-a[dataType];});
         }
         // push data into array and names sorted according to data
-        for (let i = 0; i < $scope.view.players.length; i++) {
+        for (let i = 300; i < $scope.view.players.length; i++) {
             if (teamFilter) {
                 console.log(teamFilter)
                 if ($scope.view.players[i].team.toLowerCase().includes(teamFilter)) {
@@ -231,12 +231,6 @@ app.controller("PlayersIndividualController", function($scope, playersIndividual
         $scope.datasetOverride = [];
         $scope.view.weeks = [];
         chartData = [];
-        // sort data based on what column was clicked
-        // if (sortDir) {
-        //     $scope.view.playerLog.sort((a,b)=>{return a[dataType]-b[dataType];});
-        // } else {
-        //     $scope.view.playerLog.sort((a,b)=>{return b[dataType]-a[dataType];});
-        // }
         // push data into array and names sorted according to data
         for (let i = 0; i < $scope.view.displayPlayer.length; i++) {
             chartData.push(parseInt($scope.view.displayPlayer[i][dataType]));
@@ -314,12 +308,6 @@ app.controller("TeamsIndividualController", function($scope, teamsIndividual, Te
         $scope.datasetOverride = [];
         $scope.view.weeks = [];
         chartData = [];
-        // sort data based on what column was clicked
-        if (sortDir) {
-            $scope.view.displayLogs.sort((a,b)=>{return a[dataType]-b[dataType];});
-        } else {
-            $scope.view.displayLogs.sort((a,b)=>{return b[dataType]-a[dataType];});
-        }
         // push data into array and names sorted according to data
         for (let i = 0; i < $scope.view.displayLogs.length; i++) {
             chartData.push(parseInt($scope.view.displayLogs[i][dataType]));

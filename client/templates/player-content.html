@@ -46,6 +46,6 @@
         <tr ft-player-totals ng-repeat="player in view.players | filter:{name:view.searchByName, position:view.searchByPosition, team:view.searchByTeam} | orderBy:sortType:sortReverse | limitTo:250"></tr>
     </tbody>
 </table>
-<canvas id="line" class="chart chart-bar" chart-data="data"
+<canvas id="line" class="chart chart-bar" height="100" chart-data="data"
 chart-labels="view.playerNames" chart-dataset-override="datasetOverride" chart-options="options">
 </canvas>

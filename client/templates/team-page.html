@@ -3,20 +3,20 @@
         <table class="team-log-total-table pure-table-horizontal">
             <thead>
                 <tr>
-                    <th class="data-column" ng-click="sortType = 'points'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">City</th>
-                    <th class="data-column" ng-click="sortType = 'points'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Team</th>
-                    <th class="data-column" ng-click="sortType = 'points'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Season</th>
-                    <th class="data-column" ng-click="sortType = 'points'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Points</th>
-                    <th class="data-column" ng-click="sortType = 'total_yards'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Total YDs</th>
-                    <th class="data-column" ng-click="sortType = 'attempts'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Att</th>
-                    <th class="data-column" ng-click="sortType = 'completions'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Cmp</th>
-                    <th class="data-column" ng-click="sortType = 'pass_yards'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Pass YDs</th>
-                    <th class="data-column" ng-click="sortType = 'pass_tds'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Pass TDs</th>
-                    <th class="data-column" ng-click="sortType = 'interceptions'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Int</th>
-                    <th class="data-column" ng-click="sortType = 'carries'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Carries</th>
-                    <th class="data-column" ng-click="sortType = 'rush_tds'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Rush TDs</th>
-                    <th class="data-column" ng-click="sortType = 'rush_yards'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Rush Yards</th>
-                    <th class="data-column" ng-click="sortType = 'turnovers'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Turnovers</th>
+                    <th class="data-column" ng-click="sortType = 'points'; changeChartData(sortType)">City</th>
+                    <th class="data-column" ng-click="sortType = 'points'; changeChartData(sortType)">Team</th>
+                    <th class="data-column" ng-click="sortType = 'points'; changeChartData(sortType)">Season</th>
+                    <th class="data-column" ng-click="sortType = 'points'; changeChartData(sortType)">Points</th>
+                    <th class="data-column" ng-click="sortType = 'total_yards'; changeChartData(sortType)">Total YDs</th>
+                    <th class="data-column" ng-click="sortType = 'attempts'; changeChartData(sortType)">Att</th>
+                    <th class="data-column" ng-click="sortType = 'completions'; changeChartData(sortType)">Cmp</th>
+                    <th class="data-column" ng-click="sortType = 'pass_yards'; changeChartData(sortType)">Pass YDs</th>
+                    <th class="data-column" ng-click="sortType = 'pass_tds'; changeChartData(sortType)">Pass TDs</th>
+                    <th class="data-column" ng-click="sortType = 'interceptions'; changeChartData(sortType)">Int</th>
+                    <th class="data-column" ng-click="sortType = 'carries'; changeChartData(sortType)">Carries</th>
+                    <th class="data-column" ng-click="sortType = 'rush_tds'; changeChartData(sortType)">Rush TDs</th>
+                    <th class="data-column" ng-click="sortType = 'rush_yards'; changeChartData(sortType)">Rush Yards</th>
+                    <th class="data-column" ng-click="sortType = 'turnovers'; changeChartData(sortType)">Turnovers</th>
                 </tr>
             </thead>
             <tbody>
@@ -50,25 +50,25 @@
         <table class="team-log-table pure-table-horizontal">
             <thead>
                 <tr>
-                    <th class="data-column" ng-click="sortType = 'week'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Wk</th>
+                    <th class="data-column" ng-click="sortType = 'week'; changeChartData(sortType)">Wk</th>
                     <th class="data-column" ng-click="clicky()">Opp</th>
                     <th class="data-column"></th>
                     <th class="data-column">Record</th>
                     <th class="data-column">Result</th>
-                    <th class="data-column" ng-click="sortType = 'points_for'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Points For</th>
-                    <th class="data-column" ng-click="sortType = 'points_against'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Points VS</th>
-                    <th class="data-column" ng-click="sortType = 'total_yards_for'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">ToT Yards For</th>
-                    <th class="data-column" ng-click="sortType = 'pass_yards_for'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Pass Yards For</th>
-                    <th class="data-column" ng-click="sortType = 'rush_yards_for'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Rush Yards For</th>
-                    <th class="data-column" ng-click="sortType = 'turnovers_forced'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">TOs Frcd</th>
-                    <th class="data-column" ng-click="sortType = 'total_yards_against'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">ToT Yards VS</th>
-                    <th class="data-column" ng-click="sortType = 'pass_yards_against'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Pass Yards VS</th>
-                    <th class="data-column" ng-click="sortType = 'rush_yards_against'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">Rush Yards VS</th>
-                    <th class="data-column" ng-click="sortType = 'turnovers_lost'; sortReverse = !sortReverse; changeChartData(sortType, sortReverse)">TOs Lost</th>
+                    <th class="data-column" ng-click="sortType = 'points_for'; changeChartData(sortType)">Points For</th>
+                    <th class="data-column" ng-click="sortType = 'points_against'; changeChartData(sortType)">Points VS</th>
+                    <th class="data-column" ng-click="sortType = 'total_yards_for'; changeChartData(sortType)">ToT Yards For</th>
+                    <th class="data-column" ng-click="sortType = 'pass_yards_for'; changeChartData(sortType)">Pass Yards For</th>
+                    <th class="data-column" ng-click="sortType = 'rush_yards_for'; changeChartData(sortType)">Rush Yards For</th>
+                    <th class="data-column" ng-click="sortType = 'turnovers_forced'; changeChartData(sortType)">TOs Frcd</th>
+                    <th class="data-column" ng-click="sortType = 'total_yards_against'; changeChartData(sortType)">ToT Yards VS</th>
+                    <th class="data-column" ng-click="sortType = 'pass_yards_against'; changeChartData(sortType)">Pass Yards VS</th>
+                    <th class="data-column" ng-click="sortType = 'rush_yards_against'; changeChartData(sortType)">Rush Yards VS</th>
+                    <th class="data-column" ng-click="sortType = 'turnovers_lost'; changeChartData(sortType)">TOs Lost</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ft-team-logs ng-repeat="team in view.displayLogs | orderBy:sortType:sortReverse"></tr>
+                <tr ft-team-logs ng-repeat="team in view.displayLogs | orderBy:'week'"></tr>
             </tbody>
         </table>
     </div>

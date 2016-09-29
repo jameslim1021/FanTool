@@ -3,7 +3,8 @@ import requests, re
 
 import psycopg2
 
-conn = psycopg2.connect(database="nfl_stats", user="postgres", password="pass123", host="127.0.0.1", port="5432")
+# conn = psycopg2.connect(database="nfl_stats", user="postgres", password="pass123", host="127.0.0.1", port="5432")
+conn = psycopg2.connect(os.environ.get('DATABASE_URL'))
 print "Opened database successfully"
 
 cur = conn.cursor()

@@ -6,15 +6,15 @@ FanTool is a Fantasy Football resource helping you understand player trends to w
 
 __Scoring Settings__
 
-><img src="/client/images/readme-ss1.png" width="400">
+><img src="/client/images/readme-ss1.png" width="500">
 
 __All Players Totals__
 
-><img src="/client/images/readme-ss2.png" width="400">
+><img src="/client/images/readme-ss2.png" width="500">
 
 __Individual Player Page__
 
-><img src="/client/images/readme-ss3.png" width="400">
+><img src="/client/images/readme-ss3.png" width="500">
 
 ## Technologies
 

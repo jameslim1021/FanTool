@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup, Comment
 import requests, re
+import os
 
 import psycopg2
 

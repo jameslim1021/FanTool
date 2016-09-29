@@ -4,7 +4,7 @@
   "main": "server/app.js",
   "private": true,
   "scripts": {
-    "start": "nodemon ./server/bin/www"
+    "start": "node ./server/bin/www"
   },
   "dependencies": {
     "angular-chart.js": "^1.0.2",
